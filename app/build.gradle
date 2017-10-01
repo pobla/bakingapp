@@ -27,4 +27,23 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
+    // Utils to save boilerplate code through annotations
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    annotationProcessor 'net.simonvt.schematic:schematic-compiler:0.7.0'
+    compile 'net.simonvt.schematic:schematic:0.7.0'
+//    compile 'com.android.support:appcompat-v7:26.1.0'
+
+    // UI componenents
+    compile 'com.android.support:recyclerview-v7:26.1.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+    // Web services call + json manipulationr
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.google.code.gson:gson:2.8.1'
+
+
 }

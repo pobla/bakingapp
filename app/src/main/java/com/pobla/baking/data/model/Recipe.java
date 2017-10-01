@@ -1,8 +1,11 @@
 package com.pobla.baking.data.model;
 
 
+import android.content.ContentValues;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.pobla.baking.data.storage.RecipeColumns;
 
 import java.util.List;
 
@@ -11,18 +14,23 @@ public class Recipe {
   @SerializedName("id")
   @Expose
   public int id;
+
   @SerializedName("name")
   @Expose
   public String name;
+
   @SerializedName("ingredients")
   @Expose
   public List<Ingredient> ingredients = null;
+
   @SerializedName("steps")
   @Expose
   public List<Step> steps = null;
+
   @SerializedName("servings")
   @Expose
   public int servings;
+
   @SerializedName("image")
   @Expose
   public String image;
@@ -74,4 +82,13 @@ public class Recipe {
   public void setImage(String image) {
     this.image = image;
   }
+
+  public ContentValues toContentValue() {
+    ContentValues contentValues = new ContentValues();
+    contentValues.put(RecipeColumns._ID, getId());
+    contentValues.put(RecipeColumns.TITLE, getName());
+    return contentValues;
+  }
+
+
 }

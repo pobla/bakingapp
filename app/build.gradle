@@ -10,6 +10,10 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // Authority set as a BuildConfig and string to keep it consistant.
+        buildConfigField "String", "PROVIDER_AUTHORITY", "\"com.pobla.baking.RecipeProvider\""
+        resValue "string", "authority_provider", "com.pobla.baking.RecipeProvider"
     }
     buildTypes {
         release {

@@ -1,7 +1,10 @@
 package com.pobla.baking.data.model;
 
+import android.content.ContentValues;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.pobla.baking.data.storage.StepColumns;
 
 public class Step {
 
@@ -59,5 +62,16 @@ public class Step {
 
   public void setThumbnailURL(String thumbnailURL) {
     this.thumbnailURL = thumbnailURL;
+  }
+
+  public ContentValues toContentValue(int recipeId) {
+    ContentValues contentValues = new ContentValues();
+    contentValues.put(StepColumns._ID, getId());
+    contentValues.put(StepColumns.SHORT_DESCRIPTION, getShortDescription());
+    contentValues.put(StepColumns.DESCRIPTION, getDescription());
+    contentValues.put(StepColumns.VIDEO_URL, getVideoURL());
+    contentValues.put(StepColumns.THUMBNAIL_URL, getThumbnailURL());
+    contentValues.put(StepColumns.RECIPE_ID, recipeId);
+    return contentValues;
   }
 }

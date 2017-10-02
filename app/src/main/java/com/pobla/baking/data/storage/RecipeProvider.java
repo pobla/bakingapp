@@ -7,6 +7,7 @@ import com.pobla.baking.BuildConfig;
 
 import net.simonvt.schematic.annotation.ContentProvider;
 import net.simonvt.schematic.annotation.ContentUri;
+import net.simonvt.schematic.annotation.InexactContentUri;
 import net.simonvt.schematic.annotation.TableEndpoint;
 
 import static com.pobla.baking.data.storage.RecipeProvider.AUTHORITY;
@@ -16,11 +17,46 @@ public final class RecipeProvider {
 
   public static final String AUTHORITY = BuildConfig.PROVIDER_AUTHORITY;
 
+  private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
+
+  private interface Path {
+    String RECIPE = "recipes";
+    String STEPS = "steps";
+    String INGREDIENTS = "ingredients";
+  }
+
+
   @TableEndpoint(table = BakingDatabase.RECIPES)
   public static class Recipes {
-    @ContentUri(path = "recipes", type = "vnd.android.cursor.dir/recipes", defaultSort = RecipeColumns._ID + " ASC")
+    @ContentUri(path = Path.RECIPE, type = "vnd.android.cursor.dir/recipes", defaultSort = RecipeColumns._ID + " ASC")
     public static final Uri RECIPES = Uri.parse("content://" + AUTHORITY + "/recipes");
   }
+
+  @TableEndpoint(table = BakingDatabase.STEPS)
+  public static class Steps {
+
+
+    @InexactContentUri(
+      name = "STEPS_FROM_RECIPE",
+      path = Path.RECIPE + "/" + Path.STEPS + "/#",
+      type = "vnd.android.cursor.dir/steps",
+      whereColumn = StepColumns.RECIPE_ID,
+      pathSegment = 2)
+    public static Uri fromRecipe(int recipeId) {
+      return buildUri(Path.RECIPE, Path.STEPS, String.valueOf(recipeId));
+    }
+
+
+  }
+
+  private static Uri buildUri(String... paths) {
+    Uri.Builder builder = BASE_CONTENT_URI.buildUpon();
+    for (String path : paths) {
+      builder.appendPath(path);
+    }
+    return builder.build();
+  }
+
 
 }
 

@@ -86,7 +86,9 @@ public class Recipe {
   public ContentValues toContentValue() {
     ContentValues contentValues = new ContentValues();
     contentValues.put(RecipeColumns._ID, getId());
-    contentValues.put(RecipeColumns.TITLE, getName());
+    contentValues.put(RecipeColumns.NAME, getName());
+    contentValues.put(RecipeColumns.SERVINGS, getServings());
+    contentValues.put(RecipeColumns.IMAGE, getImage());
     return contentValues;
   }
 

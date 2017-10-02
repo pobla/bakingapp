@@ -12,8 +12,12 @@ public interface RecipeColumns {
   @DataType(INTEGER)
   @PrimaryKey
   String _ID = "_id";
-
   @DataType(TEXT)
   @NotNull
-  String TITLE = "title";
+  String NAME = "name";
+  @DataType(INTEGER)
+  String SERVINGS = "servings";
+  @DataType(TEXT)
+  String IMAGE = "image";
+
 }

@@ -35,7 +35,6 @@ public final class RecipeProvider {
   @TableEndpoint(table = BakingDatabase.STEPS)
   public static class Steps {
 
-
     @InexactContentUri(
       name = "STEPS_FROM_RECIPE",
       path = Path.RECIPE + "/" + Path.STEPS + "/#",
@@ -45,9 +44,23 @@ public final class RecipeProvider {
     public static Uri fromRecipe(int recipeId) {
       return buildUri(Path.RECIPE, Path.STEPS, String.valueOf(recipeId));
     }
-
-
   }
+
+
+  @TableEndpoint(table = BakingDatabase.INGREDIENTS)
+  public static class Ingredients {
+
+    @InexactContentUri(
+      name = "INGREDIENTS_FROM_RECIPE",
+      path = Path.RECIPE + "/" + Path.INGREDIENTS + "/#",
+      type = "vnd.android.cursor.dir/ingredients",
+      whereColumn = IngredientColumns.RECIPE_ID,
+      pathSegment = 2)
+    public static Uri fromRecipe(int recipeId) {
+      return buildUri(Path.RECIPE, Path.INGREDIENTS, String.valueOf(recipeId));
+    }
+  }
+
 
   private static Uri buildUri(String... paths) {
     Uri.Builder builder = BASE_CONTENT_URI.buildUpon();

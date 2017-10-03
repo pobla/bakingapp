@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.pobla.baking.data.model.Recipe;
+import com.pobla.baking.data.storage.RecipeProvider.Ingredients;
 import com.pobla.baking.data.storage.RecipeProvider.Recipes;
 import com.pobla.baking.data.storage.RecipeProvider.Steps;
 
@@ -42,16 +43,18 @@ public class BakingIntentService extends IntentService {
     ContentValues[] contentValues = convertToContentValues(recipes);
     getContentResolver().delete(Recipes.RECIPES, null, null);
     getContentResolver().bulkInsert(Recipes.RECIPES, contentValues);
-    insertSteps(recipes);
+    insertStepsAndIngredients(recipes);
+
   }
 
-  private void insertSteps(List<Recipe> recipes) {
+  private void insertStepsAndIngredients(List<Recipe> recipes) {
     for (int i = 0; i < recipes.size(); i++) {
       Recipe recipe = recipes.get(i);
       getContentResolver().delete(Steps.fromRecipe(recipe.getId()), null, null);
+      getContentResolver().delete(Ingredients.fromRecipe(recipe.getId()), null, null);
       insertStepsForRecipe(recipe);
+      insertIngredientsForRecipe(recipe);
     }
-
 
   }
 
@@ -61,6 +64,14 @@ public class BakingIntentService extends IntentService {
       contentValues[i] = recipe.getSteps().get(i).toContentValue(recipe.getId());
     }
     getContentResolver().bulkInsert(Steps.fromRecipe(recipe.getId()), contentValues);
+  }
+
+  private void insertIngredientsForRecipe(Recipe recipe) {
+    ContentValues[] contentValues = new ContentValues[recipe.getIngredients().size()];
+    for (int i = 0; i < recipe.getIngredients().size(); i++) {
+      contentValues[i] = recipe.getIngredients().get(i).toContentValue(recipe.getId());
+    }
+    getContentResolver().bulkInsert(Ingredients.fromRecipe(recipe.getId()), contentValues);
   }
 
   @NonNull

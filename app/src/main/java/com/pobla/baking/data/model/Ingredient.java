@@ -1,7 +1,10 @@
 package com.pobla.baking.data.model;
 
+import android.content.ContentValues;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.pobla.baking.data.storage.IngredientColumns;
 
 public class Ingredient {
 
@@ -37,5 +40,14 @@ public class Ingredient {
 
   public void setIngredient(String ingredient) {
     this.ingredient = ingredient;
+  }
+
+  public ContentValues toContentValue(int recipeId) {
+    ContentValues contentValues = new ContentValues();
+    contentValues.put(IngredientColumns.QUANTITY, getQuantity());
+    contentValues.put(IngredientColumns.MEASURE, getMeasure());
+    contentValues.put(IngredientColumns.INGREDIENT, getIngredient());
+    contentValues.put(IngredientColumns.RECIPE_ID, recipeId);
+    return contentValues;
   }
 }

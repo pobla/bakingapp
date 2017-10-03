@@ -1,4 +1,4 @@
-package com.pobla.baking.data.service;
+package com.pobla.baking.data.networking;
 
 
 import com.pobla.baking.data.model.Recipe;

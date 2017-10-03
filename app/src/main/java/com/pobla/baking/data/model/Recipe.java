@@ -7,6 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.pobla.baking.data.storage.RecipeColumns;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Recipe {
@@ -21,11 +22,11 @@ public class Recipe {
 
   @SerializedName("ingredients")
   @Expose
-  public List<Ingredient> ingredients = null;
+  public List<Ingredient> ingredients = Collections.emptyList();
 
   @SerializedName("steps")
   @Expose
-  public List<Step> steps = null;
+  public List<Step> steps = Collections.emptyList();
 
   @SerializedName("servings")
   @Expose

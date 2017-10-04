@@ -4,7 +4,7 @@ import android.content.ContentValues;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.pobla.baking.data.storage.StepColumns;
+import com.pobla.baking.data.storage.schematic.values.StepsValuesBuilder;
 
 public class Step {
 
@@ -65,13 +65,13 @@ public class Step {
   }
 
   public ContentValues toContentValue(int recipeId) {
-    ContentValues contentValues = new ContentValues();
-    contentValues.put(StepColumns._ID, getId());
-    contentValues.put(StepColumns.SHORT_DESCRIPTION, getShortDescription());
-    contentValues.put(StepColumns.DESCRIPTION, getDescription());
-    contentValues.put(StepColumns.VIDEO_URL, getVideoURL());
-    contentValues.put(StepColumns.THUMBNAIL_URL, getThumbnailURL());
-    contentValues.put(StepColumns.RECIPE_ID, recipeId);
-    return contentValues;
+    StepsValuesBuilder builder = new StepsValuesBuilder();
+    builder.Id(getId());
+    builder.shortDescription(getShortDescription());
+    builder.description(getDescription());
+    builder.videoUrl(getVideoURL());
+    builder.thumbnailUrl(getThumbnailURL());
+    builder.recipeId(recipeId);
+    return builder.values();
   }
 }

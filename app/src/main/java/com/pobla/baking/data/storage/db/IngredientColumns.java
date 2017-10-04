@@ -1,4 +1,4 @@
-package com.pobla.baking.data.storage;
+package com.pobla.baking.data.storage.db;
 
 
 import net.simonvt.schematic.annotation.AutoIncrement;
@@ -22,7 +22,7 @@ import static net.simonvt.schematic.annotation.DataType.Type.TEXT;
   foreignKey = @ForeignKeyConstraint(
     name = "FK_RECIPE_ID",
     columns = IngredientColumns.RECIPE_ID,
-    referencedTable = BakingDatabase.RECIPES,
+    referencedTable = BakingDatabaseDeclaration.RECIPES,
     referencedColumns = RecipeColumns._ID
   )
 )
@@ -38,7 +38,7 @@ public interface IngredientColumns {
   @DataType(TEXT)
   String INGREDIENT = "ingredient";
   @DataType(INTEGER)
-  @References(table = BakingDatabase.RECIPES, column = RecipeColumns._ID)
+  @References(table = BakingDatabaseDeclaration.RECIPES, column = RecipeColumns._ID)
   String RECIPE_ID = "recipeId";
 
 }

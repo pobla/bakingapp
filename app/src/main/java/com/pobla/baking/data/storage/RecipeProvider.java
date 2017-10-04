@@ -4,6 +4,10 @@ package com.pobla.baking.data.storage;
 import android.net.Uri;
 
 import com.pobla.baking.BuildConfig;
+import com.pobla.baking.data.storage.db.BakingDatabaseDeclaration;
+import com.pobla.baking.data.storage.db.IngredientColumns;
+import com.pobla.baking.data.storage.db.RecipeColumns;
+import com.pobla.baking.data.storage.db.StepColumns;
 
 import net.simonvt.schematic.annotation.ContentProvider;
 import net.simonvt.schematic.annotation.ContentUri;
@@ -12,7 +16,10 @@ import net.simonvt.schematic.annotation.TableEndpoint;
 
 import static com.pobla.baking.data.storage.RecipeProvider.AUTHORITY;
 
-@ContentProvider(authority = AUTHORITY, database = BakingDatabase.class)
+@ContentProvider(authority = AUTHORITY,
+  database = BakingDatabaseDeclaration.class,
+  packageName = "com.pobla.baking.data.storage.schematic"
+)
 public final class RecipeProvider {
 
   public static final String AUTHORITY = BuildConfig.PROVIDER_AUTHORITY;
@@ -26,13 +33,13 @@ public final class RecipeProvider {
   }
 
 
-  @TableEndpoint(table = BakingDatabase.RECIPES)
+  @TableEndpoint(table = BakingDatabaseDeclaration.RECIPES)
   public static class Recipes {
     @ContentUri(path = Path.RECIPE, type = "vnd.android.cursor.dir/recipes", defaultSort = RecipeColumns._ID + " ASC")
     public static final Uri RECIPES = Uri.parse("content://" + AUTHORITY + "/recipes");
   }
 
-  @TableEndpoint(table = BakingDatabase.STEPS)
+  @TableEndpoint(table = BakingDatabaseDeclaration.STEPS)
   public static class Steps {
 
     @InexactContentUri(
@@ -47,7 +54,7 @@ public final class RecipeProvider {
   }
 
 
-  @TableEndpoint(table = BakingDatabase.INGREDIENTS)
+  @TableEndpoint(table = BakingDatabaseDeclaration.INGREDIENTS)
   public static class Ingredients {
 
     @InexactContentUri(

@@ -4,7 +4,7 @@ import android.content.ContentValues;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.pobla.baking.data.storage.IngredientColumns;
+import com.pobla.baking.data.storage.schematic.values.IngredientsValuesBuilder;
 
 public class Ingredient {
 
@@ -43,11 +43,11 @@ public class Ingredient {
   }
 
   public ContentValues toContentValue(int recipeId) {
-    ContentValues contentValues = new ContentValues();
-    contentValues.put(IngredientColumns.QUANTITY, getQuantity());
-    contentValues.put(IngredientColumns.MEASURE, getMeasure());
-    contentValues.put(IngredientColumns.INGREDIENT, getIngredient());
-    contentValues.put(IngredientColumns.RECIPE_ID, recipeId);
-    return contentValues;
+    IngredientsValuesBuilder builder = new IngredientsValuesBuilder();
+    builder.recipeId(recipeId);
+    builder.quantity(getQuantity());
+    builder.measure(getMeasure());
+    builder.ingredient(getIngredient());
+    return builder.values();
   }
 }

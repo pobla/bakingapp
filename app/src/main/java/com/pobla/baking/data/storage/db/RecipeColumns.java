@@ -1,4 +1,4 @@
-package com.pobla.baking.data.storage;
+package com.pobla.baking.data.storage.db;
 
 
 import net.simonvt.schematic.annotation.DataType;

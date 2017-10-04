@@ -1,11 +1,13 @@
-package com.pobla.baking.data.storage;
+package com.pobla.baking.data.storage.db;
 
 
 import net.simonvt.schematic.annotation.Database;
 import net.simonvt.schematic.annotation.Table;
 
-@Database(version = BakingDatabase.VERSION)
-public final class BakingDatabase {
+@Database(version = BakingDatabaseDeclaration.VERSION,
+  packageName = "com.pobla.baking.data.storage.schematic"
+)
+public final class BakingDatabaseDeclaration {
 
   static final int VERSION = 5;
 
@@ -17,7 +19,6 @@ public final class BakingDatabase {
 
   @Table(IngredientColumns.class)
   public static final String INGREDIENTS = "ingredients";
-
 
 
 }

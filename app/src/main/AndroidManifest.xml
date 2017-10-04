@@ -20,12 +20,12 @@
     </activity>
 
     <service
-      android:name=".data.service.BakingIntentService"
+      android:name=".data.BakingIntentService"
       android:exported="false"/>
 
     <provider
       android:authorities="@string/authority_provider"
-      android:name=".data.storage.generated.RecipeProvider"
+      android:name=".data.storage.schematic.RecipeProvider"
       android:exported="false"/>
   </application>
 

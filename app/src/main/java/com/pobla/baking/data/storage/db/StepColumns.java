@@ -1,10 +1,11 @@
-package com.pobla.baking.data.storage;
+package com.pobla.baking.data.storage.db;
 
+
+import com.pobla.baking.data.storage.db.BakingDatabaseDeclaration;
 
 import net.simonvt.schematic.annotation.Constraints;
 import net.simonvt.schematic.annotation.DataType;
 import net.simonvt.schematic.annotation.ForeignKeyConstraint;
-import net.simonvt.schematic.annotation.NotNull;
 import net.simonvt.schematic.annotation.References;
 import net.simonvt.schematic.annotation.UniqueConstraint;
 
@@ -20,7 +21,7 @@ import static net.simonvt.schematic.annotation.DataType.Type.TEXT;
   foreignKey = @ForeignKeyConstraint(
     name = "FK_RECIPE_ID",
     columns = StepColumns.RECIPE_ID,
-    referencedTable = BakingDatabase.RECIPES,
+    referencedTable = BakingDatabaseDeclaration.RECIPES,
     referencedColumns = RecipeColumns._ID
   )
 
@@ -42,7 +43,7 @@ public interface StepColumns {
   String THUMBNAIL_URL = "thumbnailURL";
 
   @DataType(INTEGER)
-  @References(table = BakingDatabase.RECIPES, column = RecipeColumns._ID)
+  @References(table = BakingDatabaseDeclaration.RECIPES, column = RecipeColumns._ID)
   String RECIPE_ID = "recipeId";
 
 

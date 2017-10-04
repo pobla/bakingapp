@@ -5,7 +5,7 @@ import android.content.ContentValues;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.pobla.baking.data.storage.RecipeColumns;
+import com.pobla.baking.data.storage.schematic.values.RecipesValuesBuilder;
 
 import java.util.Collections;
 import java.util.List;
@@ -85,12 +85,12 @@ public class Recipe {
   }
 
   public ContentValues toContentValue() {
-    ContentValues contentValues = new ContentValues();
-    contentValues.put(RecipeColumns._ID, getId());
-    contentValues.put(RecipeColumns.NAME, getName());
-    contentValues.put(RecipeColumns.SERVINGS, getServings());
-    contentValues.put(RecipeColumns.IMAGE, getImage());
-    return contentValues;
+    RecipesValuesBuilder builder = new RecipesValuesBuilder();
+    builder.Id(getId());
+    builder.name(getName());
+    builder.servings(getServings());
+    builder.image(getImage());
+    return builder.values();
   }
 
 

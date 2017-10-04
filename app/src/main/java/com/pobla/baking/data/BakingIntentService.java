@@ -1,4 +1,4 @@
-package com.pobla.baking.data.service;
+package com.pobla.baking.data;
 
 
 import android.app.IntentService;

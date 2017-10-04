@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:padding="@dimen/material_layout_keylines_horizontal_mobile_margin"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <TextView
+    android:id="@+id/tv_main_row_recipeName"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="@id/tv_main_row_recipeStepsLabel"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:text="Nutella Pie"/>
+
+  <TextView
+    android:id="@+id/tv_main_row_recipeServings"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintEnd_toEndOf="@+id/tv_main_row_recipeServingsLabel"
+    app:layout_constraintStart_toStartOf="@+id/tv_main_row_recipeServingsLabel"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:text="2"/>
+
+  <TextView
+    android:id="@+id/tv_main_row_recipeServingsLabel"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/material_layout_keylines_horizontal_mobile_margin"
+    android:text="@string/all_servings"
+    app:layout_constraintEnd_toStartOf="@id/tv_main_row_recipeStepsLabel"
+    app:layout_constraintTop_toBottomOf="@+id/tv_main_row_recipeServings"/>
+
+  <TextView
+    android:id="@+id/tv_main_row_recipeSteps"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintEnd_toEndOf="@+id/tv_main_row_recipeStepsLabel"
+    app:layout_constraintStart_toStartOf="@+id/tv_main_row_recipeStepsLabel"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:text="4"/>
+
+  <TextView
+    android:id="@+id/tv_main_row_recipeStepsLabel"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/material_layout_keylines_horizontal_mobile_margin"
+    android:text="@string/all_steps"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="@+id/tv_main_row_recipeServingsLabel"/>
+
+</android.support.constraint.ConstraintLayout>

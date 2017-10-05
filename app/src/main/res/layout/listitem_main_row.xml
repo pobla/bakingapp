@@ -1,55 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.support.v7.widget.CardView
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
-  android:padding="@dimen/material_layout_keylines_horizontal_mobile_margin"
+  xmlns:card_view="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/card_view"
+  android:layout_gravity="center"
+  android:layout_height="200dp"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content">
+  android:layout_marginRight="@dimen/material_component_cards_left_and_right_padding"
+  android:layout_marginLeft="@dimen/material_component_cards_left_and_right_padding"
+  android:layout_marginTop="@dimen/material_component_cards_space_between_cards"
+  card_view:cardCornerRadius="@dimen/cardview_default_radius">
 
-  <TextView
-    android:id="@+id/tv_main_row_recipeName"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:layout_constraintBottom_toBottomOf="@id/tv_main_row_recipeStepsLabel"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    tools:text="Nutella Pie"/>
+  <android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-  <TextView
-    android:id="@+id/tv_main_row_recipeServings"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:layout_constraintEnd_toEndOf="@+id/tv_main_row_recipeServingsLabel"
-    app:layout_constraintStart_toStartOf="@+id/tv_main_row_recipeServingsLabel"
-    app:layout_constraintTop_toTopOf="parent"
-    tools:text="2"/>
+    <ImageView
+      android:id="@+id/iv_main_row_recipeImage"
+      android:layout_width="match_parent"
+      android:layout_height="150dp"
+      android:background="@color/colorAccent"
+      android:src="@drawable/recipe_placeholder"
+      app:layout_constraintBottom_toTopOf="@+id/tv_main_row_recipeServings"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.0"/>
 
-  <TextView
-    android:id="@+id/tv_main_row_recipeServingsLabel"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/material_layout_keylines_horizontal_mobile_margin"
-    android:text="@string/all_servings"
-    app:layout_constraintEnd_toStartOf="@id/tv_main_row_recipeStepsLabel"
-    app:layout_constraintTop_toBottomOf="@+id/tv_main_row_recipeServings"/>
+    <TextView
+      android:id="@+id/tv_main_row_recipeName"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:paddingLeft="@dimen/material_layout_keylines_horizontal_mobile_margin"
+      android:textAllCaps="true"
+      android:textStyle="bold"
+      android:textAlignment="center"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/iv_main_row_recipeImage"
+      tools:text="Nutella Pie"/>
 
-  <TextView
-    android:id="@+id/tv_main_row_recipeSteps"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:layout_constraintEnd_toEndOf="@+id/tv_main_row_recipeStepsLabel"
-    app:layout_constraintStart_toStartOf="@+id/tv_main_row_recipeStepsLabel"
-    app:layout_constraintTop_toTopOf="parent"
-    tools:text="4"/>
+    <TextView
+      android:id="@+id/tv_main_row_recipeServings"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toTopOf="@+id/tv_main_row_recipeServingsLabel"
+      app:layout_constraintEnd_toEndOf="@+id/tv_main_row_recipeServingsLabel"
+      app:layout_constraintStart_toStartOf="@+id/tv_main_row_recipeServingsLabel"
+      tools:text="2"/>
 
-  <TextView
-    android:id="@+id/tv_main_row_recipeStepsLabel"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/material_layout_keylines_horizontal_mobile_margin"
-    android:text="@string/all_steps"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="@+id/tv_main_row_recipeServingsLabel"/>
+    <TextView
+      android:id="@+id/tv_main_row_recipeServingsLabel"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/all_servings"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="@id/tv_main_row_recipeStepsLabel"
+      android:paddingBottom="@dimen/material_component_text_fields_floating_label_padding_below_text_divider"
+      />
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+      android:id="@+id/tv_main_row_recipeSteps"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toTopOf="@+id/tv_main_row_recipeStepsLabel"
+      app:layout_constraintEnd_toEndOf="@+id/tv_main_row_recipeStepsLabel"
+      app:layout_constraintStart_toStartOf="@+id/tv_main_row_recipeStepsLabel"
+      tools:text="4"/>
+
+    <TextView
+      android:id="@+id/tv_main_row_recipeStepsLabel"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/all_steps"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:paddingLeft="@dimen/material_component_text_fields_floating_label_padding_between_label_and_input_text"
+      android:paddingRight="@dimen/material_component_text_fields_floating_label_padding_between_label_and_input_text"
+      android:paddingBottom="@dimen/material_component_text_fields_floating_label_padding_below_text_divider"
+      app:layout_constraintTop_toTopOf="@+id/tv_main_row_recipeServingsLabel"/>
+
+  </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

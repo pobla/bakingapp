@@ -20,4 +20,15 @@ public interface RecipeColumns {
   @DataType(TEXT)
   String IMAGE = "image";
 
+  String STEPS = "steps";
+
+  String[] ALL_COLUMNS = new String[]{
+    _ID,
+    NAME,
+    SERVINGS,
+    IMAGE,
+    STEPS
+  };
+
+
 }

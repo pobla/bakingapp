@@ -41,7 +41,7 @@ public class RecipeListAdapter extends Adapter<RecipeContextHolder> {
       cursor.moveToPosition(position);
       holder.recipeName.setText(Cursors.getString(cursor, RecipeColumns.NAME));
       holder.servings.setText(Cursors.getString(cursor, RecipeColumns.SERVINGS));
-      holder.steps.setText("0");
+      holder.steps.setText(Cursors.getStringOrNull(cursor, RecipeColumns.STEPS));
     }
   }
 

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.pobla.baking.data.BakingIntentService;
 import com.pobla.baking.data.storage.RecipeProvider.Recipes;
+import com.pobla.baking.data.storage.db.RecipeColumns;
 import com.pobla.baking.ui.RecipeListAdapter;
 
 import butterknife.BindView;
@@ -33,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     Intent intentToSyncImmediately = new Intent(this, BakingIntentService.class);
     startService(intentToSyncImmediately);
-    Cursor recipesCursor = getContentResolver().query(Recipes.RECIPES, null, null, null, null);
-    recipeListAdapter.swapCursor(recipesCursor);
+//    Cursor recipesCursor = getContentResolver().query(Recipes.RECIPES, PROJECTION, null, null, null);
+//    recipeListAdapter.swapCursor(recipesCursor);
 
 
 //    movieGrid.setLayoutManager(new ListAdapter(this));
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onResume() {
     super.onResume();
-    Cursor recipesCursor = getContentResolver().query(Recipes.RECIPES, null, null, null, null);
+    Cursor recipesCursor = getContentResolver().query(Recipes.RECIPES, RecipeColumns.ALL_COLUMNS, null, null, null);
     recipeListAdapter.swapCursor(recipesCursor);
   }
 }

@@ -9,7 +9,7 @@ import net.simonvt.schematic.annotation.Table;
 )
 public final class BakingDatabaseDeclaration {
 
-  static final int VERSION = 5;
+  static final int VERSION = 1;
 
   @Table(RecipeColumns.class)
   public static final String RECIPES = "recipes";

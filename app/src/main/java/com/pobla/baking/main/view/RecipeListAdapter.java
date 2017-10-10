@@ -1,4 +1,4 @@
-package com.pobla.baking.ui;
+package com.pobla.baking.main.view;
 
 
 import android.content.Context;
@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.pobla.baking.R;
 import com.pobla.baking.data.storage.db.RecipeColumns;
-import com.pobla.baking.ui.RecipeListAdapter.RecipeContextHolder;
+import com.pobla.baking.main.view.RecipeListAdapter.RecipeContextHolder;
 
 import net.simonvt.schematic.Cursors;
 
@@ -42,6 +42,7 @@ public class RecipeListAdapter extends Adapter<RecipeContextHolder> {
       holder.recipeName.setText(Cursors.getString(cursor, RecipeColumns.NAME));
       holder.servings.setText(Cursors.getString(cursor, RecipeColumns.SERVINGS));
       holder.steps.setText(Cursors.getStringOrNull(cursor, RecipeColumns.STEPS));
+      //TODO bind image view
     }
   }
 
@@ -66,6 +67,7 @@ public class RecipeListAdapter extends Adapter<RecipeContextHolder> {
     TextView servings;
     @BindView(R.id.tv_main_row_recipeSteps)
     TextView steps;
+
 
     public RecipeContextHolder(View itemView) {
       super(itemView);

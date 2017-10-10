@@ -1,6 +1,7 @@
 <resources>
   <string name="app_name">Baking App</string>
-  <string name="main_no_connection">No connection</string>
+  <string name="main_no_recipes">No recipes found</string>
   <string name="all_servings">Servings</string>
   <string name="all_steps">Steps</string>
+  <string name="main_loading_message">Pre-heating the oven…</string>
 </resources>

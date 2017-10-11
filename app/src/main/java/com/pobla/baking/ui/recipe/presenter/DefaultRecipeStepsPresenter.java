@@ -8,6 +8,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 
+import com.pobla.baking.data.storage.RecipeProvider.Ingredients;
 import com.pobla.baking.data.storage.RecipeProvider.Recipes;
 import com.pobla.baking.data.storage.RecipeProvider.Steps;
 import com.pobla.baking.data.storage.db.RecipeColumns;
@@ -49,7 +50,7 @@ public class DefaultRecipeStepsPresenter implements RecipeStepsPresenter {
       case RECIPE_TITLE_LOADER:
         return new CursorLoader(context, Recipes.withId(recipeId), new String[]{RecipeColumns.NAME}, null, null, null);
       case RECIPE_INGREDIENTS_LOADER:
-        return new CursorLoader(context, Recipes.withId(recipeId), null, null, null, null);
+        return new CursorLoader(context, Ingredients.fromRecipe(recipeId), null, null, null, null);
       default:
         return null;
     }

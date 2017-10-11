@@ -1,4 +1,4 @@
-package com.pobla.baking.main.view;
+package com.pobla.baking.ui.main.view;
 
 
 import android.content.Context;
@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.pobla.baking.R;
 import com.pobla.baking.data.storage.db.RecipeColumns;
-import com.pobla.baking.main.view.RecipeListAdapter.RecipeContextHolder;
+import com.pobla.baking.ui.main.view.RecipeListAdapter.RecipeContextHolder;
 
 import net.simonvt.schematic.Cursors;
 

@@ -1,4 +1,4 @@
-package com.pobla.baking.main.presenter;
+package com.pobla.baking.ui.main.presenter;
 
 
 import android.database.Cursor;

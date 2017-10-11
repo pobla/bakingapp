@@ -1,4 +1,4 @@
-package com.pobla.baking.main.presenter;
+package com.pobla.baking.ui.main.presenter;
 
 
 import android.content.Context;
@@ -10,7 +10,7 @@ import android.support.v4.content.Loader;
 
 import com.pobla.baking.data.storage.RecipeProvider.Recipes;
 import com.pobla.baking.data.storage.db.RecipeColumns;
-import com.pobla.baking.main.view.MainView;
+import com.pobla.baking.ui.main.view.MainView;
 
 public class DefaultMainViewPresenter implements MainViewPresenter {
 

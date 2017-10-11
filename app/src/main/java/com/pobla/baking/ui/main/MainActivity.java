@@ -1,4 +1,4 @@
-package com.pobla.baking.main;
+package com.pobla.baking.ui.main;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -10,11 +10,11 @@ import android.widget.Toast;
 
 import com.pobla.baking.R;
 import com.pobla.baking.data.BakingIntentService;
-import com.pobla.baking.main.presenter.DefaultMainViewPresenter;
-import com.pobla.baking.main.view.MainView;
-import com.pobla.baking.main.presenter.MainViewPresenter;
-import com.pobla.baking.main.view.RecipeListAdapter;
-import com.pobla.baking.main.view.RecipeListAdapter.ItemClickListener;
+import com.pobla.baking.ui.main.presenter.DefaultMainViewPresenter;
+import com.pobla.baking.ui.main.view.MainView;
+import com.pobla.baking.ui.main.presenter.MainViewPresenter;
+import com.pobla.baking.ui.main.view.RecipeListAdapter;
+import com.pobla.baking.ui.main.view.RecipeListAdapter.ItemClickListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

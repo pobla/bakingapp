@@ -1,4 +1,4 @@
-package com.pobla.baking.main.view;
+package com.pobla.baking.ui.main.view;
 
 
 import android.database.Cursor;

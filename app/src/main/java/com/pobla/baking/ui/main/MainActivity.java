@@ -6,15 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.pobla.baking.R;
 import com.pobla.baking.data.BakingIntentService;
 import com.pobla.baking.ui.main.presenter.DefaultMainViewPresenter;
-import com.pobla.baking.ui.main.view.MainView;
 import com.pobla.baking.ui.main.presenter.MainViewPresenter;
+import com.pobla.baking.ui.main.view.MainView;
 import com.pobla.baking.ui.main.view.RecipeListAdapter;
 import com.pobla.baking.ui.main.view.RecipeListAdapter.ItemClickListener;
+import com.pobla.baking.ui.recipe.RecipeListActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,16 +46,12 @@ public class MainActivity extends AppCompatActivity implements MainView, ItemCli
     recipeList.setLayoutManager(new LinearLayoutManager(this));
     recipeListAdapter = new RecipeListAdapter(this);
     recipeList.setAdapter(recipeListAdapter);
-
-
-
   }
 
   @Override
   protected void onResume() {
     super.onResume();
     presenter.retrieveRecipes();
-
   }
 
   @Override
@@ -84,6 +80,6 @@ public class MainActivity extends AppCompatActivity implements MainView, ItemCli
 
   @Override
   public void onItemClick(int recipeId) {
-    Toast.makeText(this, "Typing:" +recipeId, Toast.LENGTH_SHORT).show();
+    RecipeListActivity.startActivity(this, recipeId);
   }
 }

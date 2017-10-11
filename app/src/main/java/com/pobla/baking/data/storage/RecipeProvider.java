@@ -50,6 +50,16 @@ public final class RecipeProvider {
     @ContentUri(path = Path.RECIPE, type = "vnd.android.cursor.dir/recipes", defaultSort = RecipeColumns._ID + " ASC")
     public static final Uri RECIPES = Uri.parse("content://" + AUTHORITY + "/recipes");
 
+    @InexactContentUri(
+      name = "RECIPE_WITH_ID",
+      path = Path.RECIPE + "/#",
+      type = "vnd.android.cursor.dir/steps",
+      whereColumn = RecipeColumns._ID,
+      pathSegment = 1)
+    public static Uri withId(int recipeId) {
+      return buildUri(Path.RECIPE, String.valueOf(recipeId));
+    }
+
     static final String LIST_STEPS = "(SELECT COUNT(*) FROM "
                                        + BakingDatabaseDeclaration.STEPS
                                        + " WHERE "

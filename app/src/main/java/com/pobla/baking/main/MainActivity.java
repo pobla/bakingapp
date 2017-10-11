@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.pobla.baking.R;
 import com.pobla.baking.data.BakingIntentService;
@@ -13,11 +14,12 @@ import com.pobla.baking.main.presenter.DefaultMainViewPresenter;
 import com.pobla.baking.main.view.MainView;
 import com.pobla.baking.main.presenter.MainViewPresenter;
 import com.pobla.baking.main.view.RecipeListAdapter;
+import com.pobla.baking.main.view.RecipeListAdapter.ItemClickListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements MainView {
+public class MainActivity extends AppCompatActivity implements MainView, ItemClickListener{
 
 
   @BindView(R.id.constraintLayout_main_loading)
@@ -38,12 +40,14 @@ public class MainActivity extends AppCompatActivity implements MainView {
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
 
-    recipeList.setLayoutManager(new LinearLayoutManager(this));
-    recipeListAdapter = new RecipeListAdapter();
-    recipeList.setAdapter(recipeListAdapter);
-
     presenter = new DefaultMainViewPresenter(this, this, getSupportLoaderManager());
     BakingIntentService.startImmediateSync(this);
+
+    recipeList.setLayoutManager(new LinearLayoutManager(this));
+    recipeListAdapter = new RecipeListAdapter(this);
+    recipeList.setAdapter(recipeListAdapter);
+
+
 
   }
 
@@ -76,5 +80,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
   public void showNoRecipes() {
     recipeList.setVisibility(View.GONE);
     noRecipeView.setVisibility(View.VISIBLE);
+  }
+
+  @Override
+  public void onItemClick(int recipeId) {
+    Toast.makeText(this, "Typing:" +recipeId, Toast.LENGTH_SHORT).show();
   }
 }

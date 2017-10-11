@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -22,9 +23,12 @@ import butterknife.ButterKnife;
 public class RecipeListAdapter extends Adapter<RecipeContextHolder> {
 
 
+  private final ItemClickListener itemClickListener;
+
   private Cursor cursor;
 
-  public RecipeListAdapter() {
+  public RecipeListAdapter(ItemClickListener itemClickListener) {
+    this.itemClickListener = itemClickListener;
   }
 
 
@@ -59,7 +63,7 @@ public class RecipeListAdapter extends Adapter<RecipeContextHolder> {
     notifyDataSetChanged();
   }
 
-  class RecipeContextHolder extends RecyclerView.ViewHolder {
+  class RecipeContextHolder extends RecyclerView.ViewHolder implements OnClickListener {
 
     @BindView(R.id.tv_main_row_recipeName)
     TextView recipeName;
@@ -72,7 +76,19 @@ public class RecipeListAdapter extends Adapter<RecipeContextHolder> {
     public RecipeContextHolder(View itemView) {
       super(itemView);
       ButterKnife.bind(this, itemView);
+      itemView.setOnClickListener(this);
     }
 
+    @Override
+    public void onClick(View view) {
+      int clickedPosition = getAdapterPosition();
+      cursor.moveToPosition(clickedPosition);
+      itemClickListener.onItemClick(Cursors.getInt(cursor, RecipeColumns._ID));
+
+    }
+  }
+
+  public interface ItemClickListener {
+    void onItemClick(int recipeId);
   }
 }

@@ -57,18 +57,20 @@ public class IngredientsRecyclerViewAdapter
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View view = LayoutInflater.from(parent.getContext())
-                  .inflate(R.layout.recipe_list_content, parent, false);
+                  .inflate(R.layout.ingredient_list_content, parent, false);
     return new ViewHolder(view);
   }
 
   @Override
   public void onBindViewHolder(final ViewHolder holder, int position) {
     cursor.moveToPosition(position);
-    holder.mIdView.setText(Cursors.getString(cursor, IngredientColumns.QUANTITY));
-    holder.mContentView.setText(Cursors.getString(cursor, IngredientColumns.INGREDIENT));
+    holder.tvQuantity.setText(Cursors.getString(cursor, IngredientColumns.QUANTITY));
+    holder.txIngredientName.setText(Cursors.getString(cursor, IngredientColumns.INGREDIENT));
+    holder.tvMeasure.setText(Cursors.getString(cursor, IngredientColumns.MEASURE).toLowerCase());
     holder.itemView.setTag(Cursors.getString(cursor, IngredientColumns._ID));
     holder.itemView.setOnClickListener(mOnClickListener);
   }
+
 
   @Override
   public int getItemCount() {
@@ -84,10 +86,12 @@ public class IngredientsRecyclerViewAdapter
   }
 
   static class ViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.id_text)
-    TextView mIdView;
-    @BindView(R.id.content)
-    TextView mContentView;
+    @BindView(R.id.tv_ingredient_list_quantity)
+    TextView tvQuantity;
+    @BindView(R.id.tv_ingredient_list_name)
+    TextView txIngredientName;
+  @BindView(R.id.tv_ingredient_list_measure)
+    TextView tvMeasure;
 
     ViewHolder(View view) {
       super(view);

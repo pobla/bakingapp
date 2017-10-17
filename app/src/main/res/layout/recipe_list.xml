@@ -11,14 +11,18 @@
     android:id="@+id/ingredient_list"
     android:name="com.pobla.baking.ui.recipe.RecipeListFragment"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/material_component_grid_lists_padding_big"
+    android:paddingTop="@dimen/material_component_grid_lists_padding_big"
     app:layoutManager="LinearLayoutManager"
+    app:layout_constraintTop_toTopOf="parent"
+    android:background="@color/colorPrimaryDark"
     tools:context="com.pobla.baking.ui.recipe.RecipeListActivity"
-    tools:listitem="@layout/recipe_list_content"/>
+    tools:listitem="@layout/ingredient_list_content"/>
 
   <android.support.v7.widget.RecyclerView
+    android:paddingTop="@dimen/material_component_grid_lists_padding_big"
     android:id="@+id/recipe_list"
     android:name="com.pobla.baking.ui.recipe.RecipeListFragment"
     android:layout_width="match_parent"

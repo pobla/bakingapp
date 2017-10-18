@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.pobla.baking.R;
-import com.pobla.baking.data.storage.RecipeProvider.Ingredients;
 import com.pobla.baking.ui.recipe.presenter.DefaultRecipeStepsPresenter;
 import com.pobla.baking.ui.recipe.view.IngredientsRecyclerViewAdapter;
 import com.pobla.baking.ui.recipe.view.RecipeListView;
@@ -32,7 +31,7 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListV
   @BindView(R.id.recipe_list)
   RecyclerView recipeList;
   @BindView(R.id.ingredient_list)
-  RecyclerView ingridientList;
+  RecyclerView ingredientList;
   @BindView(R.id.toolbar)
   Toolbar toolbar;
   private DefaultRecipeStepsPresenter presenter;
@@ -55,8 +54,8 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListV
     mTwoPane = findViewById(R.id.recipe_detail_container) != null;
     //TODO change this
     recipeList.setAdapter(new RecipeStepsRecyclerViewAdapter(this, mTwoPane));
-    ingridientList.setAdapter(new IngredientsRecyclerViewAdapter(this, mTwoPane));
-    ingridientList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+    ingredientList.setAdapter(new IngredientsRecyclerViewAdapter());
+    ingredientList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
   }
 
 
@@ -72,7 +71,7 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListV
 
   @Override
   public void bindIngredients(Cursor data) {
-    ((IngredientsRecyclerViewAdapter) ingridientList.getAdapter()).setCursor(data);
+    ((IngredientsRecyclerViewAdapter) ingredientList.getAdapter()).setCursor(data);
   }
 
 }

@@ -1,10 +1,7 @@
 package com.pobla.baking.ui.recipe.view;
 
 
-import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +10,6 @@ import android.widget.TextView;
 
 import com.pobla.baking.R;
 import com.pobla.baking.data.storage.db.IngredientColumns;
-import com.pobla.baking.ui.recipe.RecipeDetailActivity;
-import com.pobla.baking.ui.recipe.RecipeDetailFragment;
-import com.pobla.baking.ui.recipe.RecipeListActivity;
 
 import net.simonvt.schematic.Cursors;
 
@@ -25,34 +19,7 @@ import butterknife.ButterKnife;
 public class IngredientsRecyclerViewAdapter
   extends RecyclerView.Adapter<IngredientsRecyclerViewAdapter.ViewHolder> {
 
-  private final RecipeListActivity mParentActivity;
   private Cursor cursor;
-  private final boolean mTwoPane;
-  private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-      String stepId = (String) view.getTag();
-      if (mTwoPane) {
-        Bundle arguments = new Bundle();
-        arguments.putString(RecipeDetailFragment.ARG_ITEM_ID, stepId);
-        RecipeDetailFragment fragment = new RecipeDetailFragment();
-        fragment.setArguments(arguments);
-        mParentActivity.getSupportFragmentManager().beginTransaction()
-          .replace(R.id.recipe_detail_container, fragment)
-          .commit();
-      } else {
-        Context context = view.getContext();
-        Intent intent = new Intent(context, RecipeDetailActivity.class);
-        intent.putExtra(RecipeDetailFragment.ARG_ITEM_ID, stepId);
-        context.startActivity(intent);
-      }
-    }
-  };
-
-  public IngredientsRecyclerViewAdapter(RecipeListActivity parent, boolean twoPane) {
-    mParentActivity = parent;
-    mTwoPane = twoPane;
-  }
 
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -67,8 +34,7 @@ public class IngredientsRecyclerViewAdapter
     holder.tvQuantity.setText(Cursors.getString(cursor, IngredientColumns.QUANTITY));
     holder.txIngredientName.setText(Cursors.getString(cursor, IngredientColumns.INGREDIENT));
     holder.tvMeasure.setText(Cursors.getString(cursor, IngredientColumns.MEASURE).toLowerCase());
-    holder.itemView.setTag(Cursors.getString(cursor, IngredientColumns._ID));
-    holder.itemView.setOnClickListener(mOnClickListener);
+    //Set image source if the service returns it.
   }
 
 
@@ -90,7 +56,7 @@ public class IngredientsRecyclerViewAdapter
     TextView tvQuantity;
     @BindView(R.id.tv_ingredient_list_name)
     TextView txIngredientName;
-  @BindView(R.id.tv_ingredient_list_measure)
+    @BindView(R.id.tv_ingredient_list_measure)
     TextView tvMeasure;
 
     ViewHolder(View view) {

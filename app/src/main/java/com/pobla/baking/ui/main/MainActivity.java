@@ -3,8 +3,11 @@ package com.pobla.baking.ui.main;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.LayoutManager;
+import android.util.DisplayMetrics;
 import android.view.View;
 
 import com.pobla.baking.R;
@@ -21,6 +24,8 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements MainView, ItemClickListener{
 
+
+  private static final int SCALING_FACTOR = 250;
 
   @BindView(R.id.constraintLayout_main_loading)
   View loadingView;
@@ -43,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements MainView, ItemCli
     presenter = new DefaultMainViewPresenter(this, this, getSupportLoaderManager());
     BakingIntentService.startImmediateSync(this);
 
-    recipeList.setLayoutManager(new LinearLayoutManager(this));
+    recipeList.setLayoutManager(calculateLayoutManager());
     recipeListAdapter = new RecipeListAdapter(this);
     recipeList.setAdapter(recipeListAdapter);
   }
@@ -81,5 +86,14 @@ public class MainActivity extends AppCompatActivity implements MainView, ItemCli
   @Override
   public void onItemClick(int recipeId) {
     RecipeListActivity.startActivity(this, recipeId);
+  }
+
+  private LayoutManager calculateLayoutManager() {
+    DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+    float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+    if(dpWidth > 900){
+      return new GridLayoutManager(this, (int) (dpWidth / SCALING_FACTOR));
+    }
+    return new LinearLayoutManager(this);
   }
 }

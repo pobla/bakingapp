@@ -47,7 +47,7 @@
       android:paddingLeft="@dimen/material_component_grid_lists_padding_big"
       android:paddingRight="@dimen/material_component_grid_lists_padding_big"
       android:paddingBottom="@dimen/material_component_grid_lists_padding_big"
-      android:textAppearance="?attr/textAppearanceListItem"
+      android:textAppearance="?attr/textAppearanceListItemSecondary"
       app:layout_constraintEnd_toStartOf="@+id/guideline_detail_guideline_vertical_half"
       app:layout_constraintBottom_toBottomOf="parent"
 
@@ -61,7 +61,7 @@
       android:paddingRight="@dimen/material_component_grid_lists_padding_big"
       android:paddingBottom="@dimen/material_component_grid_lists_padding_big"
       android:singleLine="false"
-      android:textAppearance="?attr/textAppearanceListItem"
+      android:textAppearance="?attr/textAppearanceListItemSecondary"
       app:layout_constraintStart_toStartOf="@+id/guideline_detail_guideline_vertical_half"
       app:layout_constraintBottom_toBottomOf="parent"
       tools:text="spoon"/>

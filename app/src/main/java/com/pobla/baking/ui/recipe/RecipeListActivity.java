@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -29,7 +31,7 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListV
   private static final String RECIPE_ID = "RECIPE_ID";
 
   @BindView(R.id.recipe_list)
-  RecyclerView recipeList;
+  RecyclerView stepsList;
   @BindView(R.id.ingredient_list)
   RecyclerView ingredientList;
   @BindView(R.id.toolbar)
@@ -52,8 +54,10 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListV
 
 
     mTwoPane = findViewById(R.id.recipe_detail_container) != null;
-    //TODO change this
-    recipeList.setAdapter(new RecipeStepsRecyclerViewAdapter(this, mTwoPane));
+    stepsList.setAdapter(new RecipeStepsRecyclerViewAdapter(this, mTwoPane));
+    DividerItemDecoration decor = new DividerItemDecoration(stepsList.getContext(), DividerItemDecoration.VERTICAL);
+    decor.setDrawable(ContextCompat.getDrawable(this, R.color.colorPrimaryDark));
+    stepsList.addItemDecoration(decor);
     ingredientList.setAdapter(new IngredientsRecyclerViewAdapter());
     ingredientList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
   }
@@ -66,7 +70,7 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListV
 
   @Override
   public void bindSteps(Cursor data) {
-    ((RecipeStepsRecyclerViewAdapter) recipeList.getAdapter()).setCursor(data);
+    ((RecipeStepsRecyclerViewAdapter) stepsList.getAdapter()).setCursor(data);
   }
 
   @Override

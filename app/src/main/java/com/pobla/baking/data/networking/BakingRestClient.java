@@ -34,9 +34,10 @@ public class BakingRestClient {
     try {
       Call<List<Recipe>> recipes = bakingService.getRecipes();
       Response<List<Recipe>> execute = recipes.execute();
-      return execute.body();
+      List<Recipe> body = execute.body();
+      return body != null ? body : Collections.<Recipe>emptyList();
     } catch (IOException e) {
-      Log.e(getClass().toString(), "Error retriving recipes from web services", e);
+      Log.e(getClass().toString(), "Error retrieving recipes from web services", e);
     }
     return Collections.emptyList();
   }

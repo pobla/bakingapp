@@ -1,8 +1,6 @@
 package com.pobla.baking.ui.recipe.view;
 
 
-import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -33,18 +31,13 @@ public class RecipeStepsRecyclerViewAdapter
     public void onClick(View view) {
       String stepId = (String) view.getTag();
       if (mTwoPane) {
-        Bundle arguments = new Bundle();
-        arguments.putString(RecipeDetailFragment.ARG_ITEM_ID, stepId);
         RecipeDetailFragment fragment = new RecipeDetailFragment();
-        fragment.setArguments(arguments);
+        fragment.setArguments(RecipeDetailFragment.buildArgs(mParentActivity.getRecipeId(), Integer.valueOf(stepId)));
         mParentActivity.getSupportFragmentManager().beginTransaction()
           .replace(R.id.recipe_detail_container, fragment)
           .commit();
       } else {
-        Context context = view.getContext();
-        Intent intent = new Intent(context, RecipeDetailActivity.class);
-        intent.putExtra(RecipeDetailFragment.ARG_ITEM_ID, stepId);
-        context.startActivity(intent);
+        RecipeDetailActivity.startActivity(view.getContext(), mParentActivity.getRecipeId(), Integer.valueOf(stepId));
       }
     }
   };

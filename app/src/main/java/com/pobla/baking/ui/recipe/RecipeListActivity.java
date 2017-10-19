@@ -78,4 +78,8 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListV
     ((IngredientsRecyclerViewAdapter) ingredientList.getAdapter()).setCursor(data);
   }
 
+  public int getRecipeId(){
+    return presenter.getRecipeId();
+  }
+
 }

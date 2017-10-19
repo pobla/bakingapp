@@ -20,6 +20,7 @@ public class DefaultRecipeStepsPresenter implements RecipeStepsPresenter {
 
   private final Context context;
   private final LoaderManager loaderManager;
+
   private final int recipeId;
   private final RecipeListView view;
 
@@ -83,6 +84,10 @@ public class DefaultRecipeStepsPresenter implements RecipeStepsPresenter {
   @Override
   public void onLoaderReset(Loader<Cursor> loader) {
 //    mainView.bindSteps(null);
+  }
+
+  public int getRecipeId() {
+    return recipeId;
   }
 
 }

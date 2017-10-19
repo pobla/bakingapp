@@ -53,7 +53,7 @@ public final class RecipeProvider {
     @InexactContentUri(
       name = "RECIPE_WITH_ID",
       path = Path.RECIPE + "/#",
-      type = "vnd.android.cursor.dir/steps",
+      type = "vnd.android.cursor.dir/recipe",
       whereColumn = RecipeColumns._ID,
       pathSegment = 1)
     public static Uri withId(int recipeId) {
@@ -84,6 +84,16 @@ public final class RecipeProvider {
       pathSegment = 2)
     public static Uri fromRecipe(int recipeId) {
       return buildUri(Path.RECIPE, Path.STEPS, String.valueOf(recipeId));
+    }
+
+    @InexactContentUri(
+      name = "STEP_FROM_RECIPE",
+      path = Path.RECIPE + "/#/" + Path.STEPS + "/#",
+      type = "vnd.android.cursor.dir/step",
+      whereColumn = {StepColumns._ID, StepColumns.RECIPE_ID},
+      pathSegment = {1, 3})
+    public static Uri fromRecipeWithStep(int recipeId, int stepId) {
+      return buildUri(Path.RECIPE, String.valueOf(recipeId), Path.STEPS, String.valueOf(stepId));
     }
   }
 

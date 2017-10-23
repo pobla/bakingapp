@@ -7,7 +7,7 @@
                                              android:divider="?android:attr/dividerHorizontal"
                                              android:orientation="horizontal"
                                              android:showDividers="middle"
-                                             tools:context="com.pobla.baking.ui.recipe.RecipeListActivity">
+                                             tools:context="com.pobla.baking.ui.recipe.RecipeStepsListActivity">
 
   <!--
     This layout is a two-pane layout for the Recipes
@@ -27,7 +27,7 @@
     android:paddingTop="@dimen/material_component_grid_lists_padding_big"
     app:layoutManager="LinearLayoutManager"
     app:layout_constraintTop_toTopOf="parent"
-    tools:context="com.pobla.baking.ui.recipe.RecipeListActivity"
+    tools:context="com.pobla.baking.ui.recipe.RecipeStepsListActivity"
     tools:listitem="@layout/ingredient_list_content"/>
 
 
@@ -42,7 +42,7 @@
     app:layoutManager="LinearLayoutManager"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintTop_toBottomOf="@id/ingredient_list"
-    tools:context="com.pobla.baking.ui.recipe.RecipeListActivity"
+    tools:context="com.pobla.baking.ui.recipe.RecipeStepsListActivity"
     tools:listitem="@layout/recipe_list_content"/>
 
   <FrameLayout

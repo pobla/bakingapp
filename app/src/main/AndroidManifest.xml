@@ -28,7 +28,7 @@
       android:exported="false"/>
 
     <activity
-      android:name=".ui.recipe.RecipeListActivity"
+      android:name=".ui.recipe.RecipeStepsListActivity"
       android:label="@string/title_recipe_list"
       android:parentActivityName=".ui.main.MainActivity"
       android:launchMode="singleTop"
@@ -39,13 +39,13 @@
     </activity>
 
     <activity
-      android:name=".ui.recipe.RecipeDetailActivity"
+      android:name=".ui.recipe.StepDetailActivity"
       android:label="@string/title_recipe_detail"
-      android:parentActivityName=".ui.recipe.RecipeListActivity"
+      android:parentActivityName=".ui.recipe.RecipeStepsListActivity"
       android:theme="@style/AppTheme.NoActionBar">
       <meta-data
         android:name="android.support.PARENT_ACTIVITY"
-        android:value="com.pobla.baking.ui.recipe.RecipeListActivity"/>
+        android:value="com.pobla.baking.ui.recipe.RecipeStepsListActivity"/>
     </activity>
 
   </application>

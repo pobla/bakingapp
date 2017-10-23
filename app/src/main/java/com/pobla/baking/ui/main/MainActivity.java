@@ -17,7 +17,7 @@ import com.pobla.baking.ui.main.presenter.MainViewPresenter;
 import com.pobla.baking.ui.main.view.MainView;
 import com.pobla.baking.ui.main.view.RecipeListAdapter;
 import com.pobla.baking.ui.main.view.RecipeListAdapter.ItemClickListener;
-import com.pobla.baking.ui.recipe.RecipeListActivity;
+import com.pobla.baking.ui.recipe.RecipeStepsListActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements MainView, ItemCli
 
   @Override
   public void onItemClick(int recipeId) {
-    RecipeListActivity.startActivity(this, recipeId);
+    RecipeStepsListActivity.startActivity(this, recipeId);
   }
 
   private LayoutManager calculateLayoutManager() {

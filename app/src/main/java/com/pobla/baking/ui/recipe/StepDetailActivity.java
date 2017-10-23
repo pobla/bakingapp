@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.pobla.baking.R;
+import com.pobla.baking.ui.recipe.view.StepDetailFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -15,14 +16,14 @@ import butterknife.ButterKnife;
  * An activity representing a single Recipe detail screen. This
  * activity is only used on narrow width devices. On tablet-size devices,
  * item details are presented side-by-side with a list of items
- * in a {@link RecipeListActivity}.
+ * in a {@link RecipeStepsListActivity}.
  */
-public class RecipeDetailActivity extends AppCompatActivity {
+public class StepDetailActivity extends AppCompatActivity {
 
   public static void startActivity(Context context, int recipeId, int stepId) {
-    Intent intent = new Intent(context, RecipeDetailActivity.class);
-    intent.putExtra(RecipeDetailFragment.RECIPE_ID, recipeId);
-    intent.putExtra(RecipeDetailFragment.STEP_ID, stepId);
+    Intent intent = new Intent(context, StepDetailActivity.class);
+    intent.putExtra(StepDetailFragment.RECIPE_ID, recipeId);
+    intent.putExtra(StepDetailFragment.STEP_ID, stepId);
     context.startActivity(intent);
   }
 
@@ -39,7 +40,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
 
     if (savedInstanceState == null) {
-      RecipeDetailFragment fragment = new RecipeDetailFragment();
+      StepDetailFragment fragment = new StepDetailFragment();
       fragment.setArguments(getIntent().getExtras());
       getSupportFragmentManager().beginTransaction()
         .add(R.id.recipe_detail_container, fragment)

@@ -90,7 +90,7 @@ public final class RecipeProvider {
       name = "STEP_FROM_RECIPE",
       path = Path.RECIPE + "/#/" + Path.STEPS + "/#",
       type = "vnd.android.cursor.dir/step",
-      whereColumn = {StepColumns._ID, StepColumns.RECIPE_ID},
+      whereColumn = {StepColumns.RECIPE_ID, StepColumns._ID},
       pathSegment = {1, 3})
     public static Uri fromRecipeWithStep(int recipeId, int stepId) {
       return buildUri(Path.RECIPE, String.valueOf(recipeId), Path.STEPS, String.valueOf(stepId));

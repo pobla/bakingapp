@@ -20,10 +20,10 @@ import com.pobla.baking.ui.recipe.view.RecipeStepsRecyclerViewAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecipeListActivity extends AppCompatActivity implements RecipeListView {
+public class RecipeStepsListActivity extends AppCompatActivity implements RecipeListView {
 
   public static void startActivity(Context context, int recipeId) {
-    Intent intent = new Intent(context, RecipeListActivity.class);
+    Intent intent = new Intent(context, RecipeStepsListActivity.class);
     intent.putExtra(RECIPE_ID, recipeId);
     context.startActivity(intent);
   }

@@ -2,7 +2,6 @@ package com.pobla.baking.ui.recipe.view;
 
 
 import android.database.Cursor;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +10,8 @@ import android.widget.TextView;
 
 import com.pobla.baking.R;
 import com.pobla.baking.data.storage.db.StepColumns;
-import com.pobla.baking.ui.recipe.RecipeDetailActivity;
-import com.pobla.baking.ui.recipe.RecipeDetailFragment;
-import com.pobla.baking.ui.recipe.RecipeListActivity;
+import com.pobla.baking.ui.recipe.RecipeStepsListActivity;
+import com.pobla.baking.ui.recipe.StepDetailActivity;
 
 import net.simonvt.schematic.Cursors;
 
@@ -23,7 +21,7 @@ import butterknife.ButterKnife;
 public class RecipeStepsRecyclerViewAdapter
   extends RecyclerView.Adapter<RecipeStepsRecyclerViewAdapter.ViewHolder> {
 
-  private final RecipeListActivity mParentActivity;
+  private final RecipeStepsListActivity mParentActivity;
   private Cursor cursor;
   private final boolean mTwoPane;
   private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -31,18 +29,17 @@ public class RecipeStepsRecyclerViewAdapter
     public void onClick(View view) {
       String stepId = (String) view.getTag();
       if (mTwoPane) {
-        RecipeDetailFragment fragment = new RecipeDetailFragment();
-        fragment.setArguments(RecipeDetailFragment.buildArgs(mParentActivity.getRecipeId(), Integer.valueOf(stepId)));
+        StepDetailFragment fragment = StepDetailFragment.newInstance(mParentActivity.getRecipeId(), Integer.valueOf(stepId));
         mParentActivity.getSupportFragmentManager().beginTransaction()
           .replace(R.id.recipe_detail_container, fragment)
           .commit();
       } else {
-        RecipeDetailActivity.startActivity(view.getContext(), mParentActivity.getRecipeId(), Integer.valueOf(stepId));
+        StepDetailActivity.startActivity(view.getContext(), mParentActivity.getRecipeId(), Integer.valueOf(stepId));
       }
     }
   };
 
-  public RecipeStepsRecyclerViewAdapter(RecipeListActivity parent, boolean twoPane) {
+  public RecipeStepsRecyclerViewAdapter(RecipeStepsListActivity parent, boolean twoPane) {
     mParentActivity = parent;
     mTwoPane = twoPane;
   }

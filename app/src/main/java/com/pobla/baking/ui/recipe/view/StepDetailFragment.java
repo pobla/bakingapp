@@ -1,9 +1,6 @@
 package com.pobla.baking.ui.recipe.view;
 
-import android.content.ContentResolver;
 import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -14,16 +11,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.pobla.baking.R;
-import com.pobla.baking.data.storage.RecipeProvider.Steps;
 import com.pobla.baking.data.storage.db.StepColumns;
 import com.pobla.baking.ui.recipe.RecipeStepsListActivity;
 import com.pobla.baking.ui.recipe.StepDetailActivity;
+import com.pobla.baking.ui.recipe.presenter.DefaultStepDetailPresenter;
+import com.pobla.baking.ui.recipe.presenter.StepDetail;
+import com.pobla.baking.ui.recipe.presenter.StepDetailPresenter;
 
 import net.simonvt.schematic.Cursors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * A fragment representing a single Recipe detail screen.
@@ -45,8 +43,7 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
     return fragment;
   }
 
-  private int recipeId;
-  private int stepId;
+  private StepDetailPresenter presenter;
 
   @BindView(R.id.recipe_detail_description)
   TextView textViewDescription;
@@ -55,16 +52,14 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
   @BindView(R.id.recipe_detail_button_back)
   FloatingActionButton fabBack;
 
-  public StepDetailFragment() {
-  }
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    this.presenter = new DefaultStepDetailPresenter(this, getActivity().getContentResolver());
 
     if (getArguments().containsKey(RECIPE_ID)) {
-      recipeId = getArguments().getInt(RECIPE_ID);
-      stepId = getArguments().getInt(STEP_ID);
+      presenter.setModel(new StepDetail(getArguments().getInt(STEP_ID), getArguments().getInt(RECIPE_ID)));
     }
   }
 
@@ -79,7 +74,7 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    new QueryAsyncTask(this, this.getActivity().getContentResolver()).execute(Steps.fromRecipeWithStep(recipeId, stepId));
+    presenter.retrieveDetails();
   }
 
   @Override
@@ -87,62 +82,50 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
     if (cursor != null && cursor.moveToNext()) {
       getActivity().setTitle(Cursors.getString(cursor, StepColumns.SHORT_DESCRIPTION));
       textViewDescription.setText(Cursors.getString(cursor, StepColumns.DESCRIPTION));
-      updateNext();
-      updateBack();
     }
   }
 
   private void updateBack() {
-    if (stepId == 0) {
-      fabBack.setVisibility(View.GONE);
-      return;
-    }
-    Cursor query = this.getActivity().getContentResolver().query(Steps.fromRecipeWithStep(recipeId, stepId - 1), null, null, null, null);
-    if (query != null) {
-      fabBack.setVisibility(query.getCount() == 0 ? View.GONE : View.VISIBLE);
-      query.close();
-    }
+//    if (stepId == 0) {
+//      fabBack.setVisibility(View.GONE);
+//      return;
+//    }
+//    Cursor query = this.getActivity().getContentResolver().query(Steps.fromRecipeWithStep(recipeId, stepId - 1), null, null, null, null);
+//    if (query != null) {
+//      fabBack.setVisibility(query.getCount() == 0 ? View.GONE : View.VISIBLE);
+//      query.close();
+//    }
   }
 
   private void updateNext() {
-    Cursor query = this.getActivity().getContentResolver().query(Steps.fromRecipeWithStep(recipeId, stepId + 1), null, null, null, null);
-    if (query != null) {
-      fabNext.setVisibility(query.getCount() == 0 ? View.GONE : View.VISIBLE);
-      query.close();
-    }
+//    Cursor query = this.getActivity().getContentResolver().query(Steps.fromRecipeWithStep(recipeId, stepId + 1), null, null, null, null);
+//    if (query != null) {
+//      fabNext.setVisibility(query.getCount() == 0 ? View.GONE : View.VISIBLE);
+//      query.close();
+//    }
   }
 
-  @OnClick(R.id.recipe_detail_button_back)
+  //  @OnClick(R.id.recipe_detail_button_back)
   public void showPrevious() {
-    stepId--;
-    new QueryAsyncTask(this, this.getActivity().getContentResolver()).execute(Steps.fromRecipeWithStep(recipeId, stepId));
+//    stepId--;
+//    new QueryAsyncTask(this, this.getActivity().getContentResolver()).execute(Steps.fromRecipeWithStep(recipeId, stepId));
   }
 
-  @OnClick(R.id.recipe_detail_button_next)
-  public void showNext() {
-    stepId++;
-    new QueryAsyncTask(this, this.getActivity().getContentResolver()).execute(Steps.fromRecipeWithStep(recipeId, stepId));
+//  @OnClick(R.id.recipe_detail_button_next)
+//  public void showNext() {
+//    stepId++;
+//    new QueryAsyncTask(this, this.getActivity().getContentResolver()).execute(Steps.fromRecipeWithStep(recipeId, stepId));
+//  }
+
+  @Override
+  public void showBack(boolean show) {
+    fabBack.setVisibility(show ? View.VISIBLE : View.GONE);
+
   }
 
-  private static class QueryAsyncTask extends AsyncTask<Uri, Void, Cursor> {
-
-    private final StepDetailView view;
-    private final ContentResolver contentResolver;
-
-    public QueryAsyncTask(StepDetailView view, ContentResolver contentResolver) {
-      this.view = view;
-      this.contentResolver = contentResolver;
-    }
-
-    @Override
-    protected Cursor doInBackground(Uri... uris) {
-      return contentResolver.query(uris[0], null, null, null, null);
-    }
-
-    @Override
-    protected void onPostExecute(Cursor cursor) {
-      super.onPostExecute(cursor);
-      view.bindView(cursor);
-    }
+  @Override
+  public void showNext(boolean show) {
+    fabNext.setVisibility(show ? View.VISIBLE : View.GONE);
   }
+
 }

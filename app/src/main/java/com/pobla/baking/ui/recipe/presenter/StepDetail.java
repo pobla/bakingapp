@@ -17,4 +17,12 @@ public class StepDetail {
   public int getRecipeId() {
     return recipeId;
   }
+
+  public StepDetail nextStep() {
+    return new StepDetail(stepId + 1, recipeId);
+  }
+
+  public StepDetail previousStep() {
+    return new StepDetail(stepId - 1, recipeId);
+  }
 }

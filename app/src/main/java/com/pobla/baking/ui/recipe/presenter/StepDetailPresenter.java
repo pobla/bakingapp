@@ -7,4 +7,7 @@ public interface StepDetailPresenter {
 
   void retrieveDetails();
 
+  void showNextStep();
+
+  void showPreviousStep();
 }

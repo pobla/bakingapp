@@ -22,6 +22,7 @@ import net.simonvt.schematic.Cursors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A fragment representing a single Recipe detail screen.
@@ -85,37 +86,16 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
     }
   }
 
-  private void updateBack() {
-//    if (stepId == 0) {
-//      fabBack.setVisibility(View.GONE);
-//      return;
-//    }
-//    Cursor query = this.getActivity().getContentResolver().query(Steps.fromRecipeWithStep(recipeId, stepId - 1), null, null, null, null);
-//    if (query != null) {
-//      fabBack.setVisibility(query.getCount() == 0 ? View.GONE : View.VISIBLE);
-//      query.close();
-//    }
+
+  @OnClick(R.id.recipe_detail_button_back)
+  public void previousStep() {
+    presenter.showPreviousStep();
   }
 
-  private void updateNext() {
-//    Cursor query = this.getActivity().getContentResolver().query(Steps.fromRecipeWithStep(recipeId, stepId + 1), null, null, null, null);
-//    if (query != null) {
-//      fabNext.setVisibility(query.getCount() == 0 ? View.GONE : View.VISIBLE);
-//      query.close();
-//    }
+  @OnClick(R.id.recipe_detail_button_next)
+  public void nextStep() {
+    presenter.showNextStep();
   }
-
-  //  @OnClick(R.id.recipe_detail_button_back)
-  public void showPrevious() {
-//    stepId--;
-//    new QueryAsyncTask(this, this.getActivity().getContentResolver()).execute(Steps.fromRecipeWithStep(recipeId, stepId));
-  }
-
-//  @OnClick(R.id.recipe_detail_button_next)
-//  public void showNext() {
-//    stepId++;
-//    new QueryAsyncTask(this, this.getActivity().getContentResolver()).execute(Steps.fromRecipeWithStep(recipeId, stepId));
-//  }
 
   @Override
   public void showBack(boolean show) {

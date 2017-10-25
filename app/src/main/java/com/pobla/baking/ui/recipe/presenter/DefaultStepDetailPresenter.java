@@ -32,6 +32,20 @@ public class DefaultStepDetailPresenter implements StepDetailPresenter {
     new QueryAsyncTask(view, contentResolver).execute(this.model);
   }
 
+  @Override
+  public void showNextStep() {
+    StepDetail stepDetail = model.nextStep();
+    new QueryAsyncTask(view, contentResolver).execute(stepDetail);
+    setModel(stepDetail);
+  }
+
+  @Override
+  public void showPreviousStep() {
+    StepDetail stepDetail = model.previousStep();
+    new QueryAsyncTask(view, contentResolver).execute(stepDetail);
+    setModel(stepDetail);
+  }
+
   private static class QueryAsyncTask extends AsyncTask<StepDetail, Void, List<Cursor>> {
 
     private final StepDetailView view;
@@ -45,13 +59,17 @@ public class DefaultStepDetailPresenter implements StepDetailPresenter {
     @Override
     protected List<Cursor> doInBackground(StepDetail... models) {
       StepDetail model = models[0];
-      List<Cursor> cursor = new ArrayList<>(3);
-      cursor.add(contentResolver.query(Steps.fromRecipeWithStep(model.getRecipeId(), model.getStepId()), null, null, null, null));
-      cursor.add(contentResolver.query(Steps.fromRecipeWithStep(model.getRecipeId(), model.getStepId() + 1), null, null, null, null));
-      if (model.getStepId() > 0) {
-        cursor.add(contentResolver.query(Steps.fromRecipeWithStep(model.getRecipeId(), model.getStepId() - 1), null, null, null, null));
-      }
-      return cursor;
+      List<Cursor> cursorSet = new ArrayList<>(3);
+      cursorSet.add(queryStep(model));
+      cursorSet.add(queryStep(model.nextStep()));
+      cursorSet.add(queryStep(model.previousStep()));
+      cursorSet.remove(null);
+      return cursorSet;
+    }
+
+    private Cursor queryStep(StepDetail detail) {
+      if (detail.getStepId() < 0) return null;
+      return contentResolver.query(Steps.fromRecipeWithStep(detail.getRecipeId(),detail.getStepId()), null, null, null, null);
     }
 
     @Override
@@ -62,4 +80,5 @@ public class DefaultStepDetailPresenter implements StepDetailPresenter {
       view.showBack(cursor.size() > 2 && cursor.get(2).getCount() > 0);
     }
   }
+
 }

@@ -12,16 +12,17 @@
     android:orientation="horizontal"
     app:layout_constraintGuide_percent="0.5"/>
 
-  <FrameLayout
-    android:id="@+id/recipe_detail_video"
+
+  <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+    android:id="@+id/recipe_detail_video_player"
     android:layout_width="0dp"
     android:layout_height="0dp"
     android:background="@color/colorPrimaryDark"
     app:layout_constraintBottom_toTopOf="@id/guideline_detail_guideline_horizontal_half"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    />
+    app:layout_constraintTop_toTopOf="parent"/>
+
 
   <TextView
     android:id="@+id/recipe_detail_description"
@@ -30,7 +31,7 @@
     android:layout_height="wrap_content"
     android:padding="16dp"
     android:textIsSelectable="true"
-    app:layout_constraintTop_toBottomOf="@id/recipe_detail_video"
+    app:layout_constraintTop_toBottomOf="@id/recipe_detail_video_player"
     tools:context="com.pobla.baking.ui.recipe.view.StepDetailFragment"
     tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt diam eget augue fringilla volutpat. Aliquam vel dolor ante. Donec dictum ligula in felis fermentum, nec tristique libero malesuada. Ut posuere viverra ligula non interdum. Suspendisse eget dapibus dui. Nunc eget turpis non turpis consectetur bibendum. Phasellus gravida imperdiet faucibus. Donec suscipit leo at orci tristique semper. Suspendisse potenti"
     />
@@ -40,10 +41,10 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/material_component_floating_action_button_margin"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
     android:src="@drawable/ic_arrow_forward_white_24dp"
     android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
     />
 
   <android.support.design.widget.FloatingActionButton
@@ -51,10 +52,10 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/material_component_floating_action_button_margin"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
     android:src="@drawable/ic_arrow_back_white_24dp"
     android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
     />
 
 </android.support.constraint.ConstraintLayout>

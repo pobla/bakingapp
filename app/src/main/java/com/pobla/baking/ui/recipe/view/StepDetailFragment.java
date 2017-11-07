@@ -1,6 +1,7 @@
 package com.pobla.baking.ui.recipe.view;
 
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -68,6 +70,8 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
   FloatingActionButton fabBack;
   @BindView(R.id.recipe_detail_video_player)
   SimpleExoPlayerView videoPlayerView;
+  @BindView(R.id.recipe_detail_image)
+  ImageView detailImage;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -98,16 +102,16 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
     if (cursor != null && cursor.moveToNext()) {
       getActivity().setTitle(Cursors.getString(cursor, StepColumns.SHORT_DESCRIPTION));
       textViewDescription.setText(Cursors.getString(cursor, StepColumns.DESCRIPTION));
-      //TODO fix view when video is gone (description appears half way there
       //TODO show media player full screen when phone horizontal
-      //TODO fix vide doesn't show if controllers are in the screen
       String videoUrl = Cursors.getString(cursor, StepColumns.VIDEO_URL);
       if(!TextUtils.isEmpty(videoUrl)){
+        detailImage.setVisibility(View.GONE);
         videoPlayerView.setVisibility(View.VISIBLE);
         play(Uri.parse(videoUrl));
       }else{
         stopPlayer();
         videoPlayerView.setVisibility(View.GONE);
+        detailImage.setVisibility(View.VISIBLE);
       }
     }
   }

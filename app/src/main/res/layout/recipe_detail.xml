@@ -17,7 +17,20 @@
     android:id="@+id/recipe_detail_video_player"
     android:layout_width="0dp"
     android:layout_height="0dp"
-    android:background="@color/colorPrimaryDark"
+    android:background="@android:color/black"
+    app:default_artwork="@drawable/recipe_placeholder"
+    app:layout_constraintBottom_toTopOf="@id/guideline_detail_guideline_horizontal_half"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"/>
+
+  <ImageView
+    android:id="@+id/recipe_detail_image"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:background="@color/colorAccent"
+    android:src="@drawable/recipe_placeholder"
+    android:visibility="gone"
     app:layout_constraintBottom_toTopOf="@id/guideline_detail_guideline_horizontal_half"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
@@ -27,14 +40,20 @@
   <TextView
     android:id="@+id/recipe_detail_description"
     style="?android:attr/textAppearanceLarge"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="16dp"
+    android:paddingLeft="@dimen/material_component_cards_left_and_right_padding"
+    android:paddingRight="@dimen/material_component_cards_left_and_right_padding"
+    android:paddingTop="@dimen/material_component_cards_top_and_bottom_padding"
+    android:paddingBottom="@dimen/material_component_cards_top_and_bottom_padding"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
     android:textIsSelectable="true"
-    app:layout_constraintTop_toBottomOf="@id/recipe_detail_video_player"
+    app:layout_constraintTop_toBottomOf="@id/guideline_detail_guideline_horizontal_half"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
     tools:context="com.pobla.baking.ui.recipe.view.StepDetailFragment"
-    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt diam eget augue fringilla volutpat. Aliquam vel dolor ante. Donec dictum ligula in felis fermentum, nec tristique libero malesuada. Ut posuere viverra ligula non interdum. Suspendisse eget dapibus dui. Nunc eget turpis non turpis consectetur bibendum. Phasellus gravida imperdiet faucibus. Donec suscipit leo at orci tristique semper. Suspendisse potenti"
-    />
+    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt diam eget augue fringilla volutpat. Aliquam vel dolor ante. Donec dictum ligula in felis fermentum, nec tristique libero malesuada. Ut posuere viverra ligula non interdum. Suspendisse eget dapibus dui. Nunc eget turpis non turpis consectetur bibendum. Phasellus gravida imperdiet
+     non interdum. Suspendisse eget dapibus dui. Nunc eget turpis non turpis consectetur bibendum. Phasellus gravida imperdietnon interdum. Suspendisse eget dapibus dui. Nunc eget turpis non turpis consectetur bibendum. Phasellus gravida imperdietnon interdum. Suspendisse eget dapibus dui. Nunc eget turpis non turpis consectetur bibendum. Phasellus gravida imperdietnon interdum. Suspendisse eget dapibus dui. Nunc eget turpis non turpis consectetur bibendum. Phasellus gravida imperdietnon interdum. Suspendisse eget dapibus dui. Nunc eget turpis non turpis consectetur bibendum. Phasellus gravida imperdietnon interdum. Suspendisse eget dapibus dui. Nunc eget turpis non turpis consectetur bibendum. Phasellus gravida imperdietfaucibus. Donec suscipit leo at orci tristique semper. Suspendisse potenti"/>
 
   <android.support.design.widget.FloatingActionButton
     android:id="@+id/recipe_detail_button_next"

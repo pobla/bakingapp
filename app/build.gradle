@@ -61,7 +61,7 @@ dependencies {
   compile 'com.google.code.gson:gson:2.8.1'
 
   //Video player
-  compile 'com.google.android.exoplayer:exoplayer:r2.2.0'
+  compile 'com.google.android.exoplayer:exoplayer:r2.5.4'
 
 
 }

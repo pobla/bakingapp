@@ -1,7 +1,7 @@
 package com.pobla.baking.ui.recipe.view;
 
+import android.content.res.Configuration;
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -102,17 +102,25 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
     if (cursor != null && cursor.moveToNext()) {
       getActivity().setTitle(Cursors.getString(cursor, StepColumns.SHORT_DESCRIPTION));
       textViewDescription.setText(Cursors.getString(cursor, StepColumns.DESCRIPTION));
-      //TODO show media player full screen when phone horizontal
-      String videoUrl = Cursors.getString(cursor, StepColumns.VIDEO_URL);
-      if(!TextUtils.isEmpty(videoUrl)){
-        detailImage.setVisibility(View.GONE);
-        videoPlayerView.setVisibility(View.VISIBLE);
-        play(Uri.parse(videoUrl));
-      }else{
-        stopPlayer();
-        videoPlayerView.setVisibility(View.GONE);
-        detailImage.setVisibility(View.VISIBLE);
-      }
+      showVideo(cursor);
+    }
+  }
+
+  private void showVideo(Cursor cursor) {
+    String videoUrl = Cursors.getString(cursor, StepColumns.VIDEO_URL);
+    showVideoIfExists(videoUrl);
+  }
+
+  private void showVideoIfExists(String videoUrl) {
+    if (!TextUtils.isEmpty(videoUrl)) {
+      detailImage.setVisibility(View.GONE);
+      videoPlayerView.setVisibility(View.VISIBLE);
+      play(Uri.parse(videoUrl));
+      textViewDescription.setVisibility(isVideoFullScreen()?View.GONE : View.VISIBLE);
+    } else {
+      stopPlayer();
+      videoPlayerView.setVisibility(View.GONE);
+      detailImage.setVisibility(isVideoFullScreen() ? View.GONE : View.VISIBLE);
     }
   }
 
@@ -134,17 +142,17 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
 
   @Override
   public void showBack(boolean show) {
-    fabBack.setVisibility(show ? View.VISIBLE : View.GONE);
+    fabBack.setVisibility(!isVideoFullScreen() && show ? View.VISIBLE : View.GONE);
 
   }
 
   @Override
   public void showNext(boolean show) {
-    fabNext.setVisibility(show ? View.VISIBLE : View.GONE);
+    fabNext.setVisibility(!isVideoFullScreen() && show ? View.VISIBLE : View.GONE);
   }
 
   private void play(Uri mediaUri) {
-    initilisePlayerIfRequired();
+    initPlayerIfRequired();
 
     String userAgent = Util.getUserAgent(this.getContext(), getString(R.string.app_name));
     MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(this.getContext(), userAgent), new DefaultExtractorsFactory(), null, null);
@@ -153,7 +161,7 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
     player.setPlayWhenReady(true);
   }
 
-  private void initilisePlayerIfRequired() {
+  private void initPlayerIfRequired() {
     if (videoPlayerView.getPlayer() == null) {
       TrackSelector trackSelector = new DefaultTrackSelector();
       LoadControl loadControl = new DefaultLoadControl();
@@ -165,9 +173,14 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
 
   private void stopPlayer() {
     SimpleExoPlayer player = videoPlayerView.getPlayer();
-    if(player != null){
+    if (player != null) {
       player.stop();
     }
   }
 
+  public boolean isVideoFullScreen() {
+    int display_mode = getResources().getConfiguration().orientation;
+    boolean isTablet = getResources().getBoolean(R.bool.isTablet);
+    return !isTablet && display_mode == Configuration.ORIENTATION_LANDSCAPE;
+  }
 }

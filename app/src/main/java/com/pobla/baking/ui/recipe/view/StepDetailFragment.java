@@ -164,8 +164,7 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
   private void initPlayerIfRequired() {
     if (videoPlayerView.getPlayer() == null) {
       TrackSelector trackSelector = new DefaultTrackSelector();
-      LoadControl loadControl = new DefaultLoadControl();
-      SimpleExoPlayer videoPlayer = ExoPlayerFactory.newSimpleInstance(this.getContext(), trackSelector, loadControl);
+      SimpleExoPlayer videoPlayer = ExoPlayerFactory.newSimpleInstance(this.getContext(), trackSelector);
       videoPlayerView.setPlayer(videoPlayer);
     }
   }

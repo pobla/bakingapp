@@ -45,14 +45,21 @@
     tools:context="com.pobla.baking.ui.recipe.RecipeStepsListActivity"
     tools:listitem="@layout/recipe_list_content"/>
 
+  <View
+    android:id="@+id/recipe_detail_separator"
+    android:layout_width="2dp"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    app:layout_constraintStart_toEndOf="@id/recipe_list"
+    />
+
   <FrameLayout
     android:id="@+id/recipe_detail_container"
     android:layout_width="0dp"
     android:layout_height="0dp"
-
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@+id/ingredient_list"
+    app:layout_constraintStart_toEndOf="@+id/recipe_detail_separator"
     app:layout_constraintTop_toTopOf="parent"/>
 
 

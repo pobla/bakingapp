@@ -24,10 +24,12 @@ public class RecipeDAO {
   }
 
   public void storeRecipes(List<Recipe> recipes) {
-    ContentValues[] contentValues = convertToContentValues(recipes);
-    resolver.delete(Recipes.RECIPES, null, null);
-    resolver.bulkInsert(Recipes.RECIPES, contentValues);
-    insertStepsAndIngredients(recipes);
+    if(recipes != null && recipes.size() >0 ) {
+      ContentValues[] contentValues = convertToContentValues(recipes);
+      resolver.delete(Recipes.RECIPES, null, null);
+      resolver.bulkInsert(Recipes.RECIPES, contentValues);
+      insertStepsAndIngredients(recipes);
+    }
   }
 
   private void insertStepsAndIngredients(List<Recipe> recipes) {

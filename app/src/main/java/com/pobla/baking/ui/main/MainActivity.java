@@ -2,6 +2,7 @@ package com.pobla.baking.ui.main;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,9 +24,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements MainView, ItemClickListener{
-
+  //Adding widget
+  //Adding UI tests
 
   private static final int SCALING_FACTOR = 250;
+  private static final String LAYOUT_MANAGER_STATE = "LAYOUT_MANAGER_STATE";
 
   @BindView(R.id.constraintLayout_main_loading)
   View loadingView;
@@ -57,6 +60,10 @@ public class MainActivity extends AppCompatActivity implements MainView, ItemCli
   protected void onResume() {
     super.onResume();
     presenter.retrieveRecipes();
+    //    recipeList.getLayoutManager().onRestoreInstanceState(movieGridState);
+//    if (mainViewAdapter.getItemCount() == 0) {
+//      refreshSelected();
+//    }
   }
 
   @Override
@@ -96,4 +103,20 @@ public class MainActivity extends AppCompatActivity implements MainView, ItemCli
     }
     return new LinearLayoutManager(this);
   }
+
+  @Override
+  public void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    outState.putParcelable(LAYOUT_MANAGER_STATE, recipeList.getLayoutManager().onSaveInstanceState());
+  }
+
+  @Override
+  protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    super.onRestoreInstanceState(savedInstanceState);
+    if (savedInstanceState != null) {
+      Parcelable parcelable = savedInstanceState.getParcelable(LAYOUT_MANAGER_STATE);
+      recipeList.getLayoutManager().onRestoreInstanceState(parcelable);
+    }
+  }
+
 }

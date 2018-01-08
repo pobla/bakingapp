@@ -24,8 +24,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements MainView, ItemClickListener{
-  //Adding widget
-  //Adding UI tests
+  //TODO Adding widget
+  //TODO Adding UI tests
 
   private static final int SCALING_FACTOR = 250;
   private static final String LAYOUT_MANAGER_STATE = "LAYOUT_MANAGER_STATE";
@@ -60,10 +60,6 @@ public class MainActivity extends AppCompatActivity implements MainView, ItemCli
   protected void onResume() {
     super.onResume();
     presenter.retrieveRecipes();
-    //    recipeList.getLayoutManager().onRestoreInstanceState(movieGridState);
-//    if (mainViewAdapter.getItemCount() == 0) {
-//      refreshSelected();
-//    }
   }
 
   @Override

@@ -19,6 +19,7 @@ android {
     release {
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
     }
   }
 
@@ -37,9 +38,12 @@ dependencies {
   implementation 'com.android.support:support-v4:26.1.0'
   implementation 'com.android.support:design:26.1.0'
   testImplementation 'junit:junit:4.12'
-  androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
-    exclude group: 'com.android.support', module: 'support-annotations'
-  })
+//  androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
+//    exclude group: 'com.android.support', module: 'support-annotations'
+//  })
+  androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.1'
+  androidTestCompile 'com.android.support.test:runner:1.0.1'
+  androidTestCompile 'com.android.support.test.espresso:espresso-contrib:3.0.1'
 
   // Utils to save boilerplate code through annotations
   compile 'com.jakewharton:butterknife:8.8.1'

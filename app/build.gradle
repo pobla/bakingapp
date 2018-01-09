@@ -13,6 +13,7 @@ android {
 
     // Authority set as a BuildConfig and string to keep it consistant.
     buildConfigField "String", "PROVIDER_AUTHORITY", "\"com.pobla.baking.RecipeProvider\""
+    buildConfigField "String", "BAKING_BASE_URL", "\"https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/\""
     resValue "string", "authority_provider", "com.pobla.baking.RecipeProvider"
   }
   buildTypes {

@@ -2,4 +2,5 @@
 <resources>
   <dimen name="app_bar_height">200dp</dimen>
   <dimen name="item_width">200dp</dimen>
+  <dimen name="widget_margin">8dp</dimen>
 </resources>

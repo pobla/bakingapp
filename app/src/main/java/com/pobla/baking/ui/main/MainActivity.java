@@ -1,5 +1,7 @@
 package com.pobla.baking.ui.main;
 
+import android.appwidget.AppWidgetManager;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -10,7 +12,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutManager;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.RemoteViews;
 
+import com.pobla.baking.IngredientWidgetProvider;
 import com.pobla.baking.R;
 import com.pobla.baking.data.BakingIntentService;
 import com.pobla.baking.ui.main.presenter.DefaultMainViewPresenter;
@@ -23,7 +27,9 @@ import com.pobla.baking.ui.recipe.RecipeStepsListActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements MainView, ItemClickListener{
+import static android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID;
+
+public class MainActivity extends AppCompatActivity implements MainView, ItemClickListener {
   //TODO Adding widget
   //TODO Adding UI tests
 
@@ -41,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements MainView, ItemCli
 
   private RecipeListAdapter recipeListAdapter;
   private MainViewPresenter presenter;
+  private int appWidgetId;
+  private boolean isWidgetConfigurationRequest;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +62,14 @@ public class MainActivity extends AppCompatActivity implements MainView, ItemCli
     recipeList.setLayoutManager(calculateLayoutManager());
     recipeListAdapter = new RecipeListAdapter(this);
     recipeList.setAdapter(recipeListAdapter);
+
+    Bundle extras = getIntent().getExtras();
+    if (extras != null) {
+      appWidgetId = extras.getInt(
+        AppWidgetManager.EXTRA_APPWIDGET_ID,
+        INVALID_APPWIDGET_ID);
+      isWidgetConfigurationRequest = appWidgetId != INVALID_APPWIDGET_ID;
+    }
   }
 
   @Override
@@ -88,13 +104,25 @@ public class MainActivity extends AppCompatActivity implements MainView, ItemCli
 
   @Override
   public void onItemClick(int recipeId) {
-    RecipeStepsListActivity.startActivity(this, recipeId);
+    if (!isWidgetConfigurationRequest) {
+      RecipeStepsListActivity.startActivity(this, recipeId);
+    } else {
+      updateWidget(recipeId);
+    }
+  }
+
+  private void updateWidget(int recipeId) {
+    IngredientWidgetProvider.updateAppWidget(this, AppWidgetManager.getInstance(this), recipeId, appWidgetId);
+    Intent resultValue = new Intent();
+    resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+    setResult(RESULT_OK, resultValue);
+    finish();
   }
 
   private LayoutManager calculateLayoutManager() {
     DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
     float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-    if(dpWidth > 900){
+    if (dpWidth > 900) {
       return new GridLayoutManager(this, (int) (dpWidth / SCALING_FACTOR));
     }
     return new LinearLayoutManager(this);

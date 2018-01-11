@@ -14,6 +14,7 @@ import android.widget.RemoteViews;
 import com.pobla.baking.data.storage.RecipeProvider.Recipes;
 import com.pobla.baking.data.storage.db.RecipeColumns;
 import com.pobla.baking.ui.main.MainActivity;
+import com.pobla.baking.ui.recipe.RecipeStepsListActivity;
 import com.pobla.baking.widget.ListWidgetService;
 
 import net.simonvt.schematic.Cursors;
@@ -25,13 +26,13 @@ public class IngredientWidgetProvider extends AppWidgetProvider {
     RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.ingredient_list_widget);
     rv.setTextViewText(R.id.tv_widget_name, getRecipeName(context, recipeId));
     rv.setRemoteAdapter(R.id.lv_widget_ingredients, ListWidgetService.getIntent(context, recipeId));
-    rv.setOnClickPendingIntent(R.id.tv_widget_name, getMainAppIntent(context));
+    rv.setOnClickPendingIntent(R.id.tv_widget_name, getMainAppIntent(context, recipeId));
     appWidgetManager.updateAppWidget(appWidgetId, rv);
   }
 
 
-  private static PendingIntent getMainAppIntent(Context context) {
-    Intent intent = new Intent(context, MainActivity.class);
+  private static PendingIntent getMainAppIntent(Context context, int recipeId) {
+    Intent intent = RecipeStepsListActivity.getIntent(context, recipeId);
     return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
   }
 

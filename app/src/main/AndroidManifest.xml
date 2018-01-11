@@ -33,10 +33,13 @@
       android:name=".data.BakingIntentService"
       android:exported="false"/>
 
+    <service android:name=".widget.ListWidgetService"
+      android:permission="android.permission.BIND_REMOTEVIEWS" />
+
     <provider
       android:name=".data.storage.schematic.RecipeProvider"
       android:authorities="@string/authority_provider"
-      android:exported="false"/>
+      android:exported="true"/>
 
     <activity
       android:name=".ui.recipe.RecipeStepsListActivity"

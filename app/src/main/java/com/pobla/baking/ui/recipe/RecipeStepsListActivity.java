@@ -23,9 +23,13 @@ import butterknife.ButterKnife;
 public class RecipeStepsListActivity extends AppCompatActivity implements RecipeListView {
 
   public static void startActivity(Context context, int recipeId) {
+    context.startActivity(getIntent(context, recipeId));
+  }
+
+  public static Intent getIntent(Context context, int recipeId) {
     Intent intent = new Intent(context, RecipeStepsListActivity.class);
     intent.putExtra(RECIPE_ID, recipeId);
-    context.startActivity(intent);
+    return intent;
   }
 
   private static final String RECIPE_ID = "RECIPE_ID";

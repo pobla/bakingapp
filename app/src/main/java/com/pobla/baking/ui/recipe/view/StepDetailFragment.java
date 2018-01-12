@@ -14,9 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayerFactory;
-import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
@@ -33,6 +32,8 @@ import com.pobla.baking.ui.recipe.StepDetailActivity;
 import com.pobla.baking.ui.recipe.presenter.DefaultStepDetailPresenter;
 import com.pobla.baking.ui.recipe.presenter.StepDetail;
 import com.pobla.baking.ui.recipe.presenter.StepDetailPresenter;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 import net.simonvt.schematic.Cursors;
 
@@ -50,6 +51,12 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
 
   public static final String RECIPE_ID = "RECIPE_ID";
   public static final String STEP_ID = "STEP_ID";
+  private static final String RESUME_WINDOW = "RESUME_WINDOW";
+  private static final String RESUME_POSITION = "RESUME_POSITION";
+
+  private int resumeWindow = C.INDEX_UNSET;
+  private long resumePosition = C.INDEX_UNSET;
+  private Uri mediaUri;
 
   public static StepDetailFragment newInstance(int recipeId, Integer stepId) {
     StepDetailFragment fragment = new StepDetailFragment();
@@ -81,6 +88,10 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
     if (getArguments().containsKey(RECIPE_ID)) {
       presenter.setModel(new StepDetail(getArguments().getInt(STEP_ID), getArguments().getInt(RECIPE_ID)));
     }
+    if (savedInstanceState != null && savedInstanceState.containsKey(RESUME_WINDOW)) {
+      resumeWindow = savedInstanceState.getInt(RESUME_WINDOW, C.INDEX_UNSET);
+      resumePosition = savedInstanceState.getLong(RESUME_POSITION, C.INDEX_UNSET);
+    }
   }
 
   @Override
@@ -102,8 +113,22 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
     if (cursor != null && cursor.moveToNext()) {
       getActivity().setTitle(Cursors.getString(cursor, StepColumns.SHORT_DESCRIPTION));
       textViewDescription.setText(Cursors.getString(cursor, StepColumns.DESCRIPTION));
+      showThumbnail(cursor);
       showVideo(cursor);
     }
+  }
+
+  private void showThumbnail(Cursor cursor) {
+    String thumbnail = Cursors.getString(cursor, StepColumns.THUMBNAIL_URL);
+    RequestCreator requestCreator = loadImage(thumbnail);
+    requestCreator.placeholder(R.drawable.recipe_placeholder)
+      .error(R.drawable.recipe_placeholder)
+      .into(detailImage);
+  }
+
+  private RequestCreator loadImage(String thumbnail) {
+    Picasso picasso = Picasso.with(getContext());
+    return !TextUtils.isEmpty(thumbnail) ? picasso.load(thumbnail) : picasso.load(R.drawable.recipe_placeholder);
   }
 
   private void showVideo(Cursor cursor) {
@@ -115,13 +140,21 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
     if (!TextUtils.isEmpty(videoUrl)) {
       detailImage.setVisibility(View.GONE);
       videoPlayerView.setVisibility(View.VISIBLE);
-      play(Uri.parse(videoUrl));
-      textViewDescription.setVisibility(isVideoFullScreen()?View.GONE : View.VISIBLE);
+      this.mediaUri = Uri.parse(videoUrl);
+      play();
+      textViewDescription.setVisibility(isVideoFullScreen() ? View.GONE : View.VISIBLE);
     } else {
       stopPlayer();
       videoPlayerView.setVisibility(View.GONE);
       detailImage.setVisibility(isVideoFullScreen() ? View.GONE : View.VISIBLE);
     }
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+    if (mediaUri != null)
+      play();
   }
 
   @Override
@@ -151,12 +184,15 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
     fabNext.setVisibility(!isVideoFullScreen() && show ? View.VISIBLE : View.GONE);
   }
 
-  private void play(Uri mediaUri) {
+  private void play() {
     initPlayerIfRequired();
 
     String userAgent = Util.getUserAgent(this.getContext(), getString(R.string.app_name));
     MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(this.getContext(), userAgent), new DefaultExtractorsFactory(), null, null);
     SimpleExoPlayer player = videoPlayerView.getPlayer();
+    if (resumeWindow != C.INDEX_UNSET) {
+      player.seekTo(resumeWindow, resumePosition);
+    }
     player.prepare(mediaSource);
     player.setPlayWhenReady(true);
   }
@@ -173,6 +209,8 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
   private void stopPlayer() {
     SimpleExoPlayer player = videoPlayerView.getPlayer();
     if (player != null) {
+      resumeWindow = player.getCurrentWindowIndex();
+      resumePosition = Math.max(0, player.getContentPosition());
       player.stop();
     }
   }
@@ -181,5 +219,12 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
     int display_mode = getResources().getConfiguration().orientation;
     boolean isTablet = getResources().getBoolean(R.bool.isTablet);
     return !isTablet && display_mode == Configuration.ORIENTATION_LANDSCAPE;
+  }
+
+  @Override
+  public void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    outState.putInt(RESUME_WINDOW, resumeWindow);
+    outState.putLong(RESUME_POSITION, resumePosition);
   }
 }

@@ -53,6 +53,7 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
   public static final String STEP_ID = "STEP_ID";
   private static final String RESUME_WINDOW = "RESUME_WINDOW";
   private static final String RESUME_POSITION = "RESUME_POSITION";
+  private static final String MODEL = "MODEL";
 
   private int resumeWindow = C.INDEX_UNSET;
   private long resumePosition = C.INDEX_UNSET;
@@ -85,13 +86,17 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
     super.onCreate(savedInstanceState);
     this.presenter = new DefaultStepDetailPresenter(this, getActivity().getContentResolver());
 
+    StepDetail model = null;
     if (getArguments().containsKey(RECIPE_ID)) {
-      presenter.setModel(new StepDetail(getArguments().getInt(STEP_ID), getArguments().getInt(RECIPE_ID)));
+      model = new StepDetail(getArguments().getInt(STEP_ID), getArguments().getInt(RECIPE_ID));
     }
     if (savedInstanceState != null && savedInstanceState.containsKey(RESUME_WINDOW)) {
       resumeWindow = savedInstanceState.getInt(RESUME_WINDOW, C.INDEX_UNSET);
       resumePosition = savedInstanceState.getLong(RESUME_POSITION, C.INDEX_UNSET);
+
     }
+    model = (savedInstanceState != null && savedInstanceState.containsKey(MODEL)) ? (StepDetail) savedInstanceState.getParcelable(MODEL) : model;
+    presenter.setModel(model);
   }
 
   @Override
@@ -165,18 +170,21 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
 
   @OnClick(R.id.recipe_detail_button_back)
   public void previousStep() {
+    resumeWindow = C.INDEX_UNSET;
+    resumePosition = C.INDEX_UNSET;
     presenter.showPreviousStep();
   }
 
   @OnClick(R.id.recipe_detail_button_next)
   public void nextStep() {
+    resumeWindow = C.INDEX_UNSET;
+    resumePosition = C.INDEX_UNSET;
     presenter.showNextStep();
   }
 
   @Override
   public void showBack(boolean show) {
     fabBack.setVisibility(!isVideoFullScreen() && show ? View.VISIBLE : View.GONE);
-
   }
 
   @Override
@@ -226,5 +234,6 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
     super.onSaveInstanceState(outState);
     outState.putInt(RESUME_WINDOW, resumeWindow);
     outState.putLong(RESUME_POSITION, resumePosition);
+    outState.putParcelable(MODEL, presenter.getModel());
   }
 }

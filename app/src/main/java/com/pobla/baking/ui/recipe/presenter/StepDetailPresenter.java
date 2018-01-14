@@ -10,4 +10,6 @@ public interface StepDetailPresenter {
   void showNextStep();
 
   void showPreviousStep();
+
+  StepDetail getModel();
 }

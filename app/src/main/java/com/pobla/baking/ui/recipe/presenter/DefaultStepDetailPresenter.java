@@ -28,6 +28,11 @@ public class DefaultStepDetailPresenter implements StepDetailPresenter {
   }
 
   @Override
+  public StepDetail getModel() {
+    return model;
+  }
+
+  @Override
   public void retrieveDetails() {
     new QueryAsyncTask(view, contentResolver).execute(this.model);
   }

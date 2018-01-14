@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -21,6 +22,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RecipeStepsListActivity extends AppCompatActivity implements RecipeListView {
+
+  private static final String STEP_LIST_STATE = "STEP_LIST_STATE";
+  private static final String INGREDIENTS_LIST_STATE = "INGREDIENTS_LIST_STATE";
+  private Bundle savedInstanceState;
 
   public static void startActivity(Context context, int recipeId) {
     context.startActivity(getIntent(context, recipeId));
@@ -52,10 +57,10 @@ public class RecipeStepsListActivity extends AppCompatActivity implements Recipe
     setSupportActionBar(toolbar);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+    this.savedInstanceState = savedInstanceState;
     presenter = new DefaultRecipeStepsPresenter(this, this, getSupportLoaderManager(), getIntent().getIntExtra(RECIPE_ID, -1));
     presenter.queryTitle();
     presenter.retrieveSteps();
-
 
     mTwoPane = findViewById(R.id.recipe_detail_container) != null;
     stepsList.setAdapter(new RecipeStepsRecyclerViewAdapter(this, mTwoPane));
@@ -75,15 +80,33 @@ public class RecipeStepsListActivity extends AppCompatActivity implements Recipe
   @Override
   public void bindSteps(Cursor data) {
     ((RecipeStepsRecyclerViewAdapter) stepsList.getAdapter()).setCursor(data);
+    if (savedInstanceState != null && savedInstanceState.containsKey(STEP_LIST_STATE)) {
+      stepsList.getLayoutManager().onRestoreInstanceState(savedInstanceState.getParcelable(STEP_LIST_STATE));
+    }
   }
 
   @Override
   public void bindIngredients(Cursor data) {
     ((IngredientsRecyclerViewAdapter) ingredientList.getAdapter()).setCursor(data);
+    if (savedInstanceState != null && savedInstanceState.containsKey(INGREDIENTS_LIST_STATE)) {
+      ingredientList.getLayoutManager().onRestoreInstanceState(savedInstanceState.getParcelable(INGREDIENTS_LIST_STATE));
+    }
   }
 
-  public int getRecipeId(){
+  public int getRecipeId() {
     return presenter.getRecipeId();
   }
 
+  @Override
+  protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    super.onRestoreInstanceState(savedInstanceState);
+    this.savedInstanceState = savedInstanceState;
+  }
+
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    outState.putParcelable(INGREDIENTS_LIST_STATE, ingredientList.getLayoutManager().onSaveInstanceState());
+    outState.putParcelable(STEP_LIST_STATE, stepsList.getLayoutManager().onSaveInstanceState());
+  }
 }

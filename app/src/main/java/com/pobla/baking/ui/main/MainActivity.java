@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutManager;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.RemoteViews;
 
 import com.pobla.baking.IngredientWidgetProvider;
 import com.pobla.baking.R;
@@ -30,8 +29,6 @@ import butterknife.ButterKnife;
 import static android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID;
 
 public class MainActivity extends AppCompatActivity implements MainView, ItemClickListener {
-  //TODO Adding widget
-  //TODO Adding UI tests
 
   private static final int SCALING_FACTOR = 250;
   private static final String LAYOUT_MANAGER_STATE = "LAYOUT_MANAGER_STATE";
@@ -65,9 +62,7 @@ public class MainActivity extends AppCompatActivity implements MainView, ItemCli
 
     Bundle extras = getIntent().getExtras();
     if (extras != null) {
-      appWidgetId = extras.getInt(
-        AppWidgetManager.EXTRA_APPWIDGET_ID,
-        INVALID_APPWIDGET_ID);
+      appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, INVALID_APPWIDGET_ID);
       isWidgetConfigurationRequest = appWidgetId != INVALID_APPWIDGET_ID;
     }
   }
@@ -120,9 +115,9 @@ public class MainActivity extends AppCompatActivity implements MainView, ItemCli
   }
 
   private LayoutManager calculateLayoutManager() {
-    DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
-    float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-    if (dpWidth > 900) {
+    if(getResources().getBoolean(R.bool.isTablet)) {
+      DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+      float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
       return new GridLayoutManager(this, (int) (dpWidth / SCALING_FACTOR));
     }
     return new LinearLayoutManager(this);

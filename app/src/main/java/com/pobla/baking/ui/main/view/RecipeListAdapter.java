@@ -5,15 +5,19 @@ import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pobla.baking.R;
 import com.pobla.baking.data.storage.db.RecipeColumns;
 import com.pobla.baking.ui.main.view.RecipeListAdapter.RecipeContextHolder;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 import net.simonvt.schematic.Cursors;
 
@@ -46,8 +50,19 @@ public class RecipeListAdapter extends Adapter<RecipeContextHolder> {
       holder.recipeName.setText(Cursors.getString(cursor, RecipeColumns.NAME));
       holder.servings.setText(Cursors.getString(cursor, RecipeColumns.SERVINGS));
       holder.steps.setText(Cursors.getStringOrNull(cursor, RecipeColumns.STEPS));
-      //TODO bind image view
+
+      String imageUrl = Cursors.getStringOrNull(cursor, RecipeColumns.IMAGE);
+      bindImage(holder, imageUrl);
     }
+  }
+
+  private void bindImage(RecipeContextHolder holder, String imageUrl) {
+    Picasso picasso = Picasso.with(holder.recipeImage.getContext());
+    RequestCreator requestCreator = !TextUtils.isEmpty(imageUrl) ? picasso.load(imageUrl) : picasso.load(R.drawable.recipe_placeholder);
+    requestCreator
+      .placeholder(R.drawable.recipe_placeholder)
+      .error(R.drawable.recipe_placeholder)
+      .into(holder.recipeImage);
   }
 
   @Override
@@ -71,6 +86,8 @@ public class RecipeListAdapter extends Adapter<RecipeContextHolder> {
     TextView servings;
     @BindView(R.id.tv_main_row_recipeSteps)
     TextView steps;
+    @BindView(R.id.iv_main_row_recipeImage)
+    ImageView recipeImage;
 
 
     public RecipeContextHolder(View itemView) {

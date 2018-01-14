@@ -7,7 +7,7 @@
 
   <TextView
     android:id="@+id/id_text"
-    android:layout_width="20dp"
+    android:layout_width="@dimen/recipe_list_content_id_dimen"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/material_component_lists_right_padding"
     android:textAppearance="?attr/textAppearanceListItem"

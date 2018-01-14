@@ -3,4 +3,5 @@
   <dimen name="app_bar_height">200dp</dimen>
   <dimen name="item_width">200dp</dimen>
   <dimen name="widget_margin">8dp</dimen>
+  <dimen name="recipe_list_content_id_dimen">20dp</dimen>
 </resources>

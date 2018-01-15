@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -17,6 +17,7 @@ import com.pobla.baking.ui.recipe.presenter.DefaultRecipeStepsPresenter;
 import com.pobla.baking.ui.recipe.view.IngredientsRecyclerViewAdapter;
 import com.pobla.baking.ui.recipe.view.RecipeListView;
 import com.pobla.baking.ui.recipe.view.RecipeStepsRecyclerViewAdapter;
+import com.pobla.baking.ui.recipe.view.StepDetailFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,6 +70,18 @@ public class RecipeStepsListActivity extends AppCompatActivity implements Recipe
     stepsList.addItemDecoration(decor);
     ingredientList.setAdapter(new IngredientsRecyclerViewAdapter());
     ingredientList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+    if(mTwoPane && getSupportFragmentManager().findFragmentById(R.id.recipe_detail_container) == null){
+      new Handler().post(new Runnable() {
+        public void run() {
+          StepDetailFragment fragment = StepDetailFragment.newInstance(getIntent().getIntExtra(StepDetailFragment.RECIPE_ID, -1), getIntent().getIntExtra(StepDetailFragment.STEP_ID, 0));
+            getSupportFragmentManager().beginTransaction()
+              .replace(R.id.recipe_detail_container, fragment)
+              .commit();
+          }
+      });
+
+    }
   }
 
 

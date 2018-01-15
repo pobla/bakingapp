@@ -54,9 +54,11 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
   private static final String RESUME_WINDOW = "RESUME_WINDOW";
   private static final String RESUME_POSITION = "RESUME_POSITION";
   private static final String MODEL = "MODEL";
+  private static final String PLAYSTATE = "playstate";
 
   private int resumeWindow = C.INDEX_UNSET;
   private long resumePosition = C.INDEX_UNSET;
+  private boolean isPlayWhenReady = true;
   private Uri mediaUri;
 
   public static StepDetailFragment newInstance(int recipeId, Integer stepId) {
@@ -93,6 +95,7 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
     if (savedInstanceState != null && savedInstanceState.containsKey(RESUME_WINDOW)) {
       resumeWindow = savedInstanceState.getInt(RESUME_WINDOW, C.INDEX_UNSET);
       resumePosition = savedInstanceState.getLong(RESUME_POSITION, C.INDEX_UNSET);
+      isPlayWhenReady = savedInstanceState.getBoolean(PLAYSTATE, true);
 
     }
     model = (savedInstanceState != null && savedInstanceState.containsKey(MODEL)) ? (StepDetail) savedInstanceState.getParcelable(MODEL) : model;
@@ -170,15 +173,19 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
 
   @OnClick(R.id.recipe_detail_button_back)
   public void previousStep() {
+    resetVideo();
+    presenter.showPreviousStep();
+  }
+
+  private void resetVideo() {
     resumeWindow = C.INDEX_UNSET;
     resumePosition = C.INDEX_UNSET;
-    presenter.showPreviousStep();
+    isPlayWhenReady = true;
   }
 
   @OnClick(R.id.recipe_detail_button_next)
   public void nextStep() {
-    resumeWindow = C.INDEX_UNSET;
-    resumePosition = C.INDEX_UNSET;
+    resetVideo();
     presenter.showNextStep();
   }
 
@@ -202,7 +209,7 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
       player.seekTo(resumeWindow, resumePosition);
     }
     player.prepare(mediaSource);
-    player.setPlayWhenReady(true);
+    player.setPlayWhenReady(isPlayWhenReady);
   }
 
   private void initPlayerIfRequired() {
@@ -219,6 +226,7 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
     if (player != null) {
       resumeWindow = player.getCurrentWindowIndex();
       resumePosition = Math.max(0, player.getContentPosition());
+      isPlayWhenReady = player.getPlayWhenReady();
       player.stop();
     }
   }
@@ -234,6 +242,7 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
     super.onSaveInstanceState(outState);
     outState.putInt(RESUME_WINDOW, resumeWindow);
     outState.putLong(RESUME_POSITION, resumePosition);
+    outState.putBoolean(PLAYSTATE, isPlayWhenReady);
     outState.putParcelable(MODEL, presenter.getModel());
   }
 }

@@ -228,6 +228,8 @@ public class StepDetailFragment extends Fragment implements StepDetailView {
       resumePosition = Math.max(0, player.getContentPosition());
       isPlayWhenReady = player.getPlayWhenReady();
       player.stop();
+      player.release();
+      videoPlayerView.setPlayer(null);
     }
   }
 
